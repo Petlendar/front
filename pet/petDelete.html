@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>반려동물 관리</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: white;
+      width: 400px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .pet-list {
+      margin-bottom: 20px;
+    }
+    .pet-item {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .pet-item button {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .pet-item button:hover {
+      background-color: #ff1a1a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>반려동물 관리</h2>
+    <div id="pet-list" class="pet-list">
+      <!-- 반려동물 목록이 여기에 동적으로 추가됩니다. -->
+    </div>
+  </div>
+
+  <script>
+    // 예시로 반려동물 데이터 배열 (서버에서 받아올 예정)
+    const pets = [
+      { id: 1, name: '초코', category: 'DOG', birth: '2020-03-01' },
+      { id: 2, name: '콩이', category: 'CAT', birth: '2019-07-15' }
+    ];
+
+    const petList = document.getElementById('pet-list');
+
+    // 반려동물 목록을 화면에 렌더링하는 함수
+    function renderPets() {
+      petList.innerHTML = ''; // 기존 목록 초기화
+      pets.forEach(pet => {
+        const petItem = document.createElement('div');
+        petItem.className = 'pet-item';
+        petItem.innerHTML = `
+          <span>${pet.name} (${pet.category})</span>
+          <button onclick="deletePet(${pet.id})">삭제</button>
+        `;
+        petList.appendChild(petItem);
+      });
+    }
+
+    // 반려동물 삭제 함수
+    function deletePet(petId) {
+      const petIndex = pets.findIndex(pet => pet.id === petId);
+      if (petIndex !== -1) {
+        fetch(`/api/pet/${petId}`, { method: 'DELETE' })
+          .then(response => response.json())
+          .then(data => {
+            if (data.result.resultCode === 200) {
+              alert(data.body.message);
+              pets.splice(petIndex, 1); // 삭제된 반려동물을 배열에서 제거
+              renderPets(); // 목록 다시 렌더링
+            } else {
+              alert('반려동물 삭제 중 오류가 발생했습니다.');
+            }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    }
+
+    // 페이지 로드 시 반려동물 목록 초기 렌더링
+    renderPets();
+  </script>
+
+</body>
+</html>

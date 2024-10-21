@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반려동물 정보 수정</title>
+    <link rel="stylesheet" href="../css/petModify.css">
+</head>
+<body>
+    <h1>반려동물 정보 수정</h1>
+
+    <form id="editPetForm">
+        <label for="name">이름</label>
+        <input type="text" id="name" required>
+
+        <label for="species">종류</label>
+        <input type="text" id="species" required>
+
+        <label for="birth">생일</label>
+        <input type="date" id="birth" required>
+
+        <label for="weight">체중</label>
+        <input type="number" id="weight" step="0.1" required>
+
+        <label for="vaccineType">백신 유형</label>
+        <select id="vaccineType">
+            <option value="파보">파보</option>
+            <option value="광견병">광견병</option>
+            <option value="홍역">홍역</option>
+            <option value="기타">기타</option>
+        </select>
+
+        <label for="vaccineDate">백신 날짜</label>
+        <input type="date" id="vaccineDate" required>
+
+        <button type="submit">수정하기</button>
+    </form>
+
+    <script src="../js/petModify.js"></script>
+</body>
+</html>

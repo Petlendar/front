@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입</title>
+  <link rel="stylesheet" href="../css/usersignup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>회원 가입</h1>
+    <form id="register-form">
+      <!-- 이메일 -->
+      <label for="email">이메일</label>
+      <input type="email" id="email" placeholder="이메일을 입력하세요" required>
+      <div id="email-response-message" class="error-message">이메일 형식에 맞지 않습니다.</div>
+
+      <!-- 닉네임 -->
+      <label for="nickname">닉네임</label>
+      <input type="text" id="nickname" placeholder="닉네임을 입력하세요" required>
+      <div id="nickname-response-message" class="error-message">이미 사용중인 닉네임입니다.</div>
+
+      <!-- 비밀번호 -->
+      <label for="password">비밀번호</label>
+      <div class="input-wrapper">
+        <input type="password" id="password" placeholder="비밀번호를 입력하세요" required>
+        <button type="button" id="toggle-password-visibility" class="toggle-password">👁</button>
+      </div>
+      <div id="password-response-message" class="error-message">비밀번호 생성 규칙에 맞지 않습니다.</div>
+
+      <!-- 비밀번호 확인 -->
+      <label for="confirm-password">비밀번호 확인</label>
+      <div class="input-wrapper">
+        <input type="password" id="confirm-password" placeholder="비밀번호를 다시 입력하세요" required>
+        <button type="button" id="toggle-confirm-password-visibility" class="toggle-password">👁</button>
+      </div>
+      <div id="confirm-password-response-message" class="error-message">비밀번호가 일치하지 않습니다.</div>
+
+      <!-- 휴대폰 번호 -->
+      <label for="phone">휴대폰 번호</label>
+      <input type="tel" id="phone" placeholder="숫자만 입력하세요" required>
+      <div id="phone-response-message" class="error-message">휴대폰 번호를 입력해주세요.</div>
+
+      <!-- 생년월일 -->
+      <label for="birth">생년월일</label>
+      <input type="date" id="birth" required>
+      <div id="birth-response-message" class="error-message">생년월일을 입력해주세요.</div>
+
+      <!-- 주소 -->
+      <label for="address">주소</label>
+      <input type="text" id="address" placeholder="주소를 입력하세요" required>
+      <div id="address-response-message" class="error-message">주소를 입력해주세요.</div>
+
+      <!-- 가입하기 버튼 -->
+      <button type="submit" id="register-btn" class="register-btn">가입하기</button>
+    </form>
+  </div>
+
+  <script src="../js/usersignup.js"></script>
+</body>
+</html>

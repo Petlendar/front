@@ -1,0 +1,109 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #fff5e1;
+    padding: 20px 0;
+}
+
+.nav-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #555;
+}
+
+.auth-buttons button {
+    background-color: #FF7300;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.auth-buttons button:hover {
+    background-color: #FF9500;
+}
+
+main {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.calendar-section {
+    background-color: #f5d4ae;
+    padding: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.calendar-container h3 {
+    margin-bottom: 20px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.pet-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.pet-thumbnails {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.pet-thumbnails img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    transition: border 0.3s ease;
+}
+
+.pet-thumbnails img:hover {
+    border: 3px solid #FF7300;
+    cursor: pointer;
+}

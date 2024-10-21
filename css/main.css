@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #f1dfc3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: 18px;
+}
+
+header h1 {
+    font-size: 24px;
+    color: black;
+}
+
+nav a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #f46f32;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e95d1c;
+}
+
+#main-section {
+    display: flex;
+    justify-content: space-between; /* 왼쪽과 오른쪽 요소가 양쪽으로 위치하게 조정 */
+    align-items: flex-start; /* 상단을 맞춤 */
+    padding: 40px;
+}
+
+.calendar-container {
+    background-color: #fde8d3;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin-right: auto; /* 캘린더를 왼쪽으로 붙임 */
+}
+
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    justify-items: stretch;
+    width: 100%;
+}
+
+.day, .empty {
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.day {
+    height: 50px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.day:hover {
+    background-color: #f8b400;
+}
+
+.empty {
+    visibility: hidden;
+}
+
+.pet-selection {
+    text-align: center;
+    width: 100%; /* 전체 너비 설정 */
+}
+
+#pet-list {
+    display: flex;
+    justify-content: center; /* 이미지를 가운데로 배치 */
+    flex-wrap: wrap;
+    gap: 20px; /* 이미지 간격 */
+}
+
+#pet-list img {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    border-radius: 50%;
+    border: 2px solid #f46f32;
+    cursor: pointer;
+}
+
+#pet-list img:hover {
+    border-color: #e95d1c;
+}
