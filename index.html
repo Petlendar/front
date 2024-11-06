@@ -1,45 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PETLENDAR</title>
-    <link rel="stylesheet" href="./css/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PETLENDAR</title>
+  <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    <header>
-        <h1>PETLENDAR</h1>
-        <nav>
-            <a href="#">Community</a>
-            <a href="#" id="registerHospital">Register Hospital</a>  <!-- 여기에 id 추가 -->
-            <button id="loginBtn">로그인</button>
-            <button id="registerBtn">회원가입</button>
-        </nav>
-        
-    </header>
+  <header>
+    <h1>PETLENDAR</h1>
+    <nav>
+      <a href="#">Community</a>
+      <button id="loginBtn" style="display: none;">로그인</button>
+      <button id="registerBtn" style="display: none;">회원가입</button>
+      <button id="myInfoBtn" style="display: none;">내 정보</button>
+      <button id="logoutBtn" style="display: none;">로그아웃</button>
+    </nav>
+  </header>
 
-    <section id="main-section">
-        <div class="calendar-container">
-            <div id="calendar-header">
-                <h2>JANUARY 2024</h2>
-                <button id="prevMonth">◀</button>
-                <button id="nextMonth">▶</button>
-            </div>
-            <div id="calendar-days" class="calendar-days"></div>
-        </div>
+  <section id="main-section">
+    <div class="calendar-container">
+      <div id="calendar-header">
+        <h2>JANUARY 2024</h2>
+        <button id="prevMonth">◀</button>
+        <button id="nextMonth">▶</button>
+      </div>
+      <div id="calendar-days" class="calendar-days"></div>
+    </div>
 
-        <div class="pet-selection">
-            <h3>Select your pet</h3>
-            <div id="pet-list">
-                <img src="pet1.jpg" alt="Pet 1">
-                <img src="pet2.jpg" alt="Pet 2">
-                <img src="pet3.jpg" alt="Pet 3">
-                <img src="pet4.jpg" alt="Pet 4">
-                <img src="pet5.jpg" alt="Pet 5">
-            </div>
-        </div>
-    </section>
+    <div class="pet-selection">
+      <h3>Select your pet</h3>
+      <div id="pet-list">
+        <!-- 반려동물 이미지가 여기에 로드됩니다 -->
+      </div>
+    </div>
+  </section>
 
-    <script src="./js/main.js"></script>
+  <script src="./js/main.js"></script>
 </body>
 </html>

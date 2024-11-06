@@ -118,3 +118,27 @@ button:hover {
 #pet-list img:hover {
     border-color: #e95d1c;
 }
+.pet-wrapper {
+    display: inline-block;
+    text-align: center;
+    margin: 0 15px;
+    padding-top: 10px;
+}
+
+/* 반려동물 이미지 스타일 */
+.pet-wrapper img {
+    display: block;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #f46f32;
+    cursor: pointer;
+}
+
+/* 반려동물 이름 스타일 */
+.pet-wrapper p {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #333;
+}

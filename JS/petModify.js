@@ -1,62 +1,92 @@
-// Get pet id from URL
-const urlParams = new URLSearchParams(window.location.search);
-const petId = urlParams.get('id');
+document.addEventListener('DOMContentLoaded', async function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const petId = urlParams.get('petId');
+  const accessToken = localStorage.getItem('accessToken');
+  const form = document.getElementById('pet-modify-form');
+  const responseMessage = document.getElementById('response-message');
 
-// Fetch pet details from server
-async function fetchPetDetails() {
-    try {
-        const response = await fetch(`http://114.70.216.57/api/pets/${petId}`, { // API URL 수정 필요
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const pet = await response.json();
-        populateForm(pet);
-    } catch (error) {
-        console.error('Error fetching pet details:', error);
+  // 초기 값 불러오기
+  try {
+    const response = await fetch(`http://114.70.216.57/pet/api/pet/${petId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
+
+    const data = await response.json();
+    if (data.result.resultCode === 200) {
+      const pet = data.body;
+      document.getElementById('name').value = pet.name;
+      document.getElementById('birth').value = pet.birth;
+      document.getElementById('address').value = pet.address;
+      document.getElementById('category').value = pet.category;
+      document.getElementById('weight').value = pet.weight;
     }
-}
+  } catch (error) {
+    console.error('기존 데이터 불러오기 오류:', error);
+  }
 
-// Populate form with fetched data
-function populateForm(pet) {
-    document.getElementById('name').value = pet.name;
-    document.getElementById('species').value = pet.species;
-    document.getElementById('birth').value = pet.birth;
-    document.getElementById('weight').value = pet.weight;
-    document.getElementById('vaccineType').value = pet.vaccine.type;
-    document.getElementById('vaccineDate').value = pet.vaccine.date;
-}
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const birth = document.getElementById('birth').value;
+    const address = document.getElementById('address').value;
+    const category = document.getElementById('category').value;
+    const weight = parseFloat(document.getElementById('weight').value);
+    const imageFile = document.getElementById('image').files[0];
 
-// Handle form submission and send updated data to server
-document.getElementById('editPetForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+    let imageId = null;
 
-    const updatedPet = {
-        name: document.getElementById('name').value,
-        species: document.getElementById('species').value,
-        birth: document.getElementById('birth').value,
-        weight: document.getElementById('weight').value,
-        vaccine: {
-            type: document.getElementById('vaccineType').value,
-            date: document.getElementById('vaccineDate').value,
+    // 이미지가 있는 경우 업로드
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append('file', imageFile);
+      formData.append('kind', 'PET');
+
+      try {
+        const imageUploadResponse = await fetch('http://114.70.216.57/image/api/image', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${accessToken}` },
+          body: formData
+        });
+
+        const imageUploadData = await imageUploadResponse.json();
+        if (imageUploadData.result.resultCode === 200) {
+          imageId = imageUploadData.body.id;
         }
+      } catch (error) {
+        console.error('이미지 업로드 오류:', error);
+        return;
+      }
+    }
+
+    // 수정 요청
+    const updateData = {
+      result: { resultCode: 0, resultMessage: "string", resultDescription: "string" },
+      body: { petId: parseInt(petId), name, birth, address, category, weight, imageId }
     };
 
     try {
-        await fetch(`http://114.70.216.57/api/pets/${petId}`, { // API URL 수정 필요
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedPet)
-        });
-        alert('반려동물 정보가 수정되었습니다.');
-        window.location.href = 'petCheck.html';
-    } catch (error) {
-        console.error('Error updating pet:', error);
-    }
-});
+      const updateResponse = await fetch('http://114.70.216.57/pet/api/pet/update', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updateData)
+      });
 
-// Fetch and display pet details on page load
-fetchPetDetails();
+      const updateResult = await updateResponse.json();
+      if (updateResult.result.resultCode === 200) {
+        responseMessage.textContent = '수정 완료!';
+        responseMessage.style.color = 'green';
+        responseMessage.style.display = 'block';
+        setTimeout(() => window.location.href = `petDetail.html?petId=${petId}`, 1500);
+      }
+    } catch (error) {
+      console.error('수정 오류:', error);
+    }
+  });
+});

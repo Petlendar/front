@@ -1,75 +1,54 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>반려동물 등록</title>
-    <link rel="stylesheet" href="../css/petResistration.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>반려동물 등록</title>
+  <link rel="stylesheet" href="../css/petResistration.css">
 </head>
 <body>
-    <div class="container">
-        <h1>반려동물 등록</h1>
-        <!-- Pet Image Upload -->
-        <div class="image-upload">
-            <img id="petImage" src="default-image.png" alt="반려동물 이미지">
-            <input type="file" id="imageUpload" accept="image/*">
-        </div>
+  <div class="container">
+    <h1>반려동물 등록</h1>
+    <form id="pet-register-form">
+      <div class="input-wrapper">
+        <label for="name">이름</label>
+        <input type="text" id="name" required>
+      </div>
 
-        <form id="petRegisterForm">
-            <div class="form-group">
-                <label for="name">반려동물 이름:</label>
-                <input type="text" id="name" placeholder="반려동물의 이름을 입력해주세요." required>
-                <div class="error-message" id="name-error">반려동물 이름을 입력해주세요.</div>
-            </div>
-            <div class="form-group">
-                <label for="birth">반려동물 생일:</label>
-                <input type="date" id="birth" required>
-                <div class="error-message" id="birth-error">반려동물 생일을 입력해주세요.</div>
-            </div>
-            <div class="form-group">
-                <label for="species">동물 종류:</label>
-                <select id="species" required>
-                    <option value="" disabled selected>동물 종류 선택</option>
-                    <option value="DOG">개</option>
-                    <option value="CAT">고양이</option>
-                    <option value="OTHER">기타</option>
-                </select>
-                <div class="error-message" id="species-error">동물 종류를 선택해주세요.</div>
-            </div>
-            <div class="form-group">
-                <label for="weight">체중 (kg):</label>
-                <input type="number" id="weight" step="0.1" required>
-                <div class="error-message" id="weight-error">체중을 입력해주세요.</div>
-            </div>
-            <div class="form-group">
-                <label for="vaccineType">백신 유형:</label>
-                <select id="vaccineType" required>
-                    <option value="" disabled selected>백신 유형 선택</option>
-                    <option value="RABIES">광견병</option>
-                    <option value="PARVO">파보</option>
-                    <option value="DISTEMPER">홍역</option>
-                    <option value="OTHER">기타</option>
-                </select>
-                <input type="text" id="otherVaccineType" placeholder="백신 유형 입력" style="display: none;">
-                <div class="error-message" id="vaccineType-error">백신 유형을 입력해주세요.</div>
-            </div>
-            <div class="form-group">
-                <label for="vaccineDate">백신 날짜:</label>
-                <input type="date" id="vaccineDate" required>
-                <div class="error-message" id="vaccineDate-error">백신 날짜를 입력해주세요.</div>
-            </div>
-            <div class="form-group">
-                <label for="address">주소:</label>
-                <input type="text" id="address" placeholder="우편번호" required>
-                <button type="button" id="searchPostcode">우편번호 검색</button>
-                <input type="text" id="detailAddress" placeholder="상세 주소" required>
-                <div class="error-message" id="address-error">주소를 입력해주세요.</div>
-            </div>
+      <div class="input-wrapper">
+        <label for="birth">생년월일</label>
+        <input type="date" id="birth" required>
+      </div>
 
-            <button type="submit">등록하기</button>
-        </form>
-        <div id="responseMessage" class="response-message"></div>
-    </div>
-    <script src="../js/petRegistration.js"></script>
+      <div class="input-wrapper">
+        <label for="address">주소</label>
+        <input type="text" id="address" required>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="category">카테고리</label>
+        <select id="category" required>
+          <option value="DOG">DOG</option>
+          <option value="CAT">CAT</option>
+          <!-- 추가할 수 있는 반려동물 카테고리 -->
+        </select>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="weight">체중 (kg)</label>
+        <input type="number" step="0.1" id="weight" required>
+      </div>
+
+      <div class="input-wrapper">
+        <label for="image">이미지 업로드</label>
+        <input type="file" id="image" accept="image/*">
+      </div>
+
+      <button type="submit">반려동물 등록</button>
+      <p id="response-message" style="display: none;"></p>
+    </form>
+  </div>
+
+  <script src="../js/petRegistration.js"></script>
 </body>
 </html>

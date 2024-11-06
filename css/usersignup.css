@@ -1,5 +1,7 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -15,7 +17,7 @@ body {
   background-color: white;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 400px;
 }
 
@@ -25,55 +27,80 @@ h1 {
   margin-bottom: 20px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-input {
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 100%;
-}
-
 .input-wrapper {
-  position: relative;
+  margin-bottom: 15px;
 }
 
-.toggle-password {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 10px;
   font-size: 16px;
-  cursor: pointer;
+  border: 2px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  height: 42px; /* 우편번호 필드와 버튼 높이 동일하게 */
 }
 
-.error-message {
-  font-size: 12px;
-  color: red;
-  display: none;
-}
-
-.register-btn {
-  padding: 12px;
+.postal-btn {
   background-color: #ff6600;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 10px;
   cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  width: 120px;
+  height: 42px; /* 우편번호 필드와 버튼 높이 동일하게 */
+}
+
+.postal-btn:hover {
+  background-color: #ff4500;
+}
+
+.check-btn {
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  width: 100px;
+}
+
+.check-btn:hover {
+  background-color: #ff4500;
+}
+
+.toggle-password {
+  margin-left: -35px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input[type="tel"],
+input[type="date"],
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  font-size: 18px;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .register-btn:hover {
