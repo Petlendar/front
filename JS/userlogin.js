@@ -10,7 +10,8 @@ document.getElementById('login-btn').addEventListener('click', async function() 
     },
     body: {
       email: email,
-      password: password
+      password: password,
+      fcmToken: "string"
     }
   };
 
