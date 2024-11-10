@@ -3,9 +3,13 @@ document.addEventListener('DOMContentLoaded', async function () {
   let currentMonth = new Date().getMonth();
   const accessToken = localStorage.getItem('accessToken');
   const petListContainer = document.getElementById('pet-list');
+  let pets = []; // 반려동물 목록 저장용
 
   // 캘린더 생성
   await createCalendar(currentYear, currentMonth);
+
+  // 데이터 비교 (추가된 부분)
+  await compareVaccinationData();
 
   // 이전, 다음 월 버튼 클릭 이벤트
   document.getElementById('prevMonth').addEventListener('click', async function () {
@@ -15,6 +19,9 @@ document.addEventListener('DOMContentLoaded', async function () {
       currentYear--;
     }
     await createCalendar(currentYear, currentMonth);
+
+    // 데이터 비교 (달력 갱신 후에도 비교)
+    await compareVaccinationData();
   });
 
   document.getElementById('nextMonth').addEventListener('click', async function () {
@@ -24,6 +31,9 @@ document.addEventListener('DOMContentLoaded', async function () {
       currentYear++;
     }
     await createCalendar(currentYear, currentMonth);
+
+    // 데이터 비교 (달력 갱신 후에도 비교)
+    await compareVaccinationData();
   });
 
   // 로그인 상태 확인
@@ -35,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (accessToken) {
     myInfoBtn.style.display = 'inline';
     logoutBtn.style.display = 'inline';
-    loadRegisteredPets();
+    pets = await loadRegisteredPets();
   } else {
     loginBtn.style.display = 'inline';
     registerBtn.style.display = 'inline';
@@ -78,8 +88,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       if (data.result.resultCode === 200 && Array.isArray(data.body)) {
         petListContainer.innerHTML = '';
+        const petList = data.body;
 
-        data.body.forEach(pet => {
+        petList.forEach(pet => {
           const petWrapper = document.createElement('div');
           petWrapper.classList.add('pet-wrapper');
 
@@ -100,15 +111,15 @@ document.addEventListener('DOMContentLoaded', async function () {
           petListContainer.appendChild(petWrapper);
         });
 
-        if (petListContainer.innerHTML === '') {
-          petListContainer.innerHTML = '<p>등록된 반려동물이 없습니다.</p>';
-        }
+        return petList;
       } else {
         petListContainer.innerHTML = '<p>반려동물 목록을 불러오는 데 실패했습니다.</p>';
+        return [];
       }
     } catch (error) {
       console.error('반려동물 목록 오류:', error);
       petListContainer.innerHTML = '<p>반려동물 목록을 불러올 수 없습니다.</p>';
+      return [];
     }
   }
 
@@ -135,8 +146,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       dayCell.classList.add('day');
       dayCell.textContent = day;
 
-      if (vaccinationData.some(record => record.day === day)) {
+      const dayEvents = vaccinationData.filter(record => record.day === day);
+
+      if (dayEvents.length > 0) {
         dayCell.classList.add('highlight');
+        dayCell.addEventListener('click', () => showDayEvents(day, dayEvents));
       }
 
       calendarDays.appendChild(dayCell);
@@ -146,7 +160,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   // 접종 데이터 가져오기 함수
   async function fetchVaccinationData(year, month) {
     try {
-      const response = await fetch(`http://114.70.216.57/api/calendar/${year}/${month}`, {
+      const response = await fetch(`http://114.70.216.57/pet/api/calendar/${year}/${month}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
@@ -156,7 +170,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       const data = await response.json();
 
-      if (data.result.resultCode === 0 && Array.isArray(data.body)) {
+      if (data.result.resultCode === 200 && Array.isArray(data.body)) {
         return data.body;
       } else {
         console.error('접종 데이터 로드 실패:', data);
@@ -165,6 +179,71 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (error) {
       console.error('접종 데이터 오류:', error);
       return [];
+    }
+  }
+
+  // 클릭한 날짜의 이벤트를 모달 창으로 보여주는 함수
+  function showDayEvents(day, events) {
+    // 모달 생성
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+
+    const closeButton = document.createElement('span');
+    closeButton.classList.add('close-button');
+    closeButton.textContent = '×';
+    closeButton.addEventListener('click', () => modal.remove());
+
+    modalContent.appendChild(closeButton);
+
+    const title = document.createElement('h3');
+    title.textContent = `${day}일의 예방접종 정보`;
+    modalContent.appendChild(title);
+
+    events.forEach(event => {
+      const pet = pets.find(p => p.petId === event.petId);
+      const eventItem = document.createElement('p');
+      eventItem.textContent = `유형: ${event.vaccinationType}, 반려동물: ${pet ? pet.name : '알 수 없음'}`;
+      modalContent.appendChild(eventItem);
+    });
+
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+  }
+
+  // 데이터 비교 함수
+  async function compareVaccinationData() {
+    try {
+      const calendarData = await fetchVaccinationData(currentYear, currentMonth + 1);
+      const detailedDataResponse = await fetch('http://114.70.216.57/pet/api/vaccination', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const detailedData = await detailedDataResponse.json();
+
+      console.log('달력 데이터:', calendarData);
+      console.log('상세 데이터:', detailedData);
+
+      if (!Array.isArray(detailedData.body)) {
+        console.error('상세 데이터 형식 오류');
+        return;
+      }
+
+      const unmatchedData = calendarData.filter(calendarItem =>
+        !detailedData.body.some(detailItem =>
+          calendarItem.day === new Date(detailItem.date).getDate()
+        )
+      );
+
+      console.log('일치하지 않는 데이터:', unmatchedData);
+    } catch (error) {
+      console.error('데이터 비교 중 오류:', error);
     }
   }
 });

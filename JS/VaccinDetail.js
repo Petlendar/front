@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
 
       const petData = await petResponse.json();
+      console.log(petData)
       if (petData.result && petData.result.resultCode === 200 && petData.body.length > 0) {
           petListDiv.innerHTML = '<h2>펫 목록</h2>';
           petData.body.forEach(pet => {
@@ -46,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   async function loadVaccinationDetails(petId) {
       vaccinationListDiv.innerHTML = '<p>예방접종 정보를 불러오는 중...</p>';
-
+      console.log("petId 출력 : ", petId);
       try {
           const vaccinationResponse = await fetch(`${apiUrl}/vaccination/${petId}`, {
               method: 'GET',
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           }
 
           const vaccinationData = await vaccinationResponse.json();
-
+          console.log("dasdfasdf", vaccinationData);
           if (vaccinationData.result && vaccinationData.result.resultCode === 200 && vaccinationData.body.length > 0) {
               vaccinationListDiv.innerHTML = '<h2>예방접종 정보</h2>';
               vaccinationData.body.forEach(record => {
@@ -94,8 +95,9 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (!confirm('정말로 삭제하시겠습니까?')) return;
 
       try {
+          console.log("vaccination record : ", vaccinationRecordId);
           const deleteResponse = await fetch(`${apiUrl}/vaccination/${vaccinationRecordId}`, {
-              method: 'DELETE',
+              method: 'POST',
               headers: {
                   'Authorization': `Bearer ${accessToken}`,
                   'Content-Type': 'application/json',
