@@ -107,7 +107,7 @@ function displayPosts() {
         const postElement = document.createElement('div');
         postElement.classList.add('post');
         postElement.innerHTML = `
-            <img src="${post.boardImage?.imageUrl || './image/default-image.webp'}" alt="게시글 이미지">
+            <img src="${post.boardImage?.imageUrl || './images/default-image.webp'}" alt="게시글 이미지">
             <h3>${post.title}</h3>
             <div class="post-meta">
                 <span>${post.userId}</span> · <span>${new Date(post.registeredAt).toLocaleDateString()}</span>
