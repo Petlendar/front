@@ -3,18 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시글 등록</title>
-    <link rel="stylesheet" href="./css/boardindex.css">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="./css/boardregister.css">
+    <!-- Quill CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>게시글 등록</h1>
-        <input type="text" id="postTitle" placeholder="게시글 제목" />
-        <textarea id="postContent" placeholder="게시글 내용을 입력하세요"></textarea>
-        <button id="submitPostBtn">등록하기</button>
-        <button id="backToIndexBtn">목록으로</button>
+    <!-- 상단바 -->
+    <header class="navbar">
+        <a href="boardindex.html" class="logo">PETLENDAR</a>
+        <button id="submit-btn" class="submit-btn">등록</button>
+    </header>
+    
+    <!-- 제목 입력 -->
+    <input type="text" id="title-input" class="title-input" placeholder="제목을 입력하세요" />
+
+    <!-- Quill 툴바 -->
+    <div id="toolbar">  
+        <span class="ql-formats">
+            <select class="ql-font"></select>
+            <select class="ql-size"></select>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-bold"></button>
+            <button class="ql-italic"></button>
+            <button class="ql-underline"></button>
+        </span>
+        <span class="ql-formats">
+            <select class="ql-color"></select>
+            <select class="ql-background"></select>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-list" value="ordered"></button>
+            <button class="ql-list" value="bullet"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-align" value=""></button>
+            <button class="ql-align" value="center"></button>
+            <button class="ql-align" value="right"></button>
+            <button class="ql-align" value="justify"></button>
+        </span>
+        <span class="ql-formats">
+            <button class="ql-image"></button> <!-- 이미지 버튼 커스터마이징 -->
+        </span>
     </div>
 
-    <script src="./js/boardregister.js"></script>
+    <!-- Quill 에디터 상단에 글자수 표시 -->
+    <div id="char-count" style="font-size: 0.8em; color: gray; margin-bottom: 4px; text-align: right;">0/1000</div>
+    <!-- Quill 에디터 영역 -->
+    <div id="editor" class="editor"></div>
+
+    <script type="module" src="./js/boardregister.js"></script>
 </body>
 </html>
