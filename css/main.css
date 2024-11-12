@@ -1,217 +1,165 @@
-/* 기본 스타일 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* 전체적인 스타일 */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
 }
 
-header {
-    background-color: #f1dfc3;
+section#main-section {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 20px;
-    font-size: 18px;
+    flex-wrap: wrap; /* 반응형 디자인을 위해 추가 */
 }
 
-header h1 {
-    font-size: 24px;
-    color: black;
-}
-
-nav a {
-    margin-right: 20px;
-    text-decoration: none;
-    color: black;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #f46f32;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #e95d1c;
-}
-
-/* 메인 섹션 스타일 */
-#main-section {
+.main-content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    padding: 40px;
-}
-
-.calendar-container {
-    background-color: #fde8d3;
-    padding: 20px;
-    border-radius: 10px;
     width: 100%;
-    max-width: 400px;
-    text-align: center;
-    margin-right: auto;
+    flex-wrap: wrap; /* 화면 크기에 따라 자동으로 줄 바꿈 */
 }
 
+/* 캘린더 영역 스타일 */
+.calendar-area {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-right: 20px;
+    min-width: 400px; /* 최소 크기 설정 */
+}
+
+/* 캘린더 헤더 */
 #calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+}
+
+#calendar-title {
+    font-size: 24px;
+}
+
+button {
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 #calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
-
-.day, .empty {
-    padding: 10px;
-    background-color: white;
-    border-radius: 5px;
-    text-align: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .day {
-    height: 50px;
-    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 .day:hover {
-    background-color: #f8b400;
+    background-color: #ddd;
 }
 
-.empty {
-    visibility: hidden;
+.highlight {
+    background-color: #ffeb3b;
 }
 
-.day.highlight {
-    background-color: #f4ce6e;
-    color: white;
+/* 캘린더 오른쪽 정보 영역 */
+#info-area {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 280px; /* 최소 크기 설정 */
+}
+
+/* 정보 영역 텍스트 */
+#vaccination-info {
+    font-size: 18px;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
-/* 반려동물 선택 */
-.pet-selection {
-    text-align: center;
+/* -----------------------------------------------반려동물 목록 영역----------------------------------------------- */
+.pet-area {
     width: 100%;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 반려동물 목록을 수평으로 가운데 정렬 */
+    padding: 20px;
+    background-color: #fff; /* 배경색 추가 */
+    border-radius: 8px; /* 테두리 둥글게 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.pet-area h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 #pet-list {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-#pet-list img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #f46f32;
-    cursor: pointer;
-}
-
-#pet-list img:hover {
-    border-color: #e95d1c;
+    flex-wrap: wrap; /* 여러 줄로 나열되도록 설정 */
+    justify-content: center; /* 아이템을 수평 중앙 정렬 */
+    gap: 15px;
+    width: 100%;
+    max-width: 600px; /* 아이템이 너무 넓어지지 않도록 최대 너비 제한 */
+    margin: 0 auto; /* 전체 목록도 가운데 정렬 */
 }
 
 .pet-wrapper {
-    display: inline-block;
     text-align: center;
-    margin: 0 15px;
+    width: 100px; /* 아이템 크기 제한 */
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 마우스 호버시 애니메이션 추가 */
+}
+
+.pet-wrapper img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover; /* 이미지 비율 맞추기 */
 }
 
 .pet-wrapper p {
-    margin-top: 8px;
-    font-weight: bold;
+    margin-top: 10px;
+    font-size: 14px;
     color: #333;
 }
 
-/* 드롭다운 스타일 */
-.dropdown {
-    position: relative;
-    display: inline-block;
+/* 반려동물 목록 클릭 시 효과 */
+.pet-wrapper img:hover {
+    opacity: 0.8;
+    transform: scale(1.1); /* 마우스 오버 시 확대 효과 */
 }
 
-.dropbtn {
-    background-color: #f46f32;
-    color: white;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+/* 캘린더 정보와 반려동물 영역을 구분하기 위한 여백 */
+#info-area {
+    margin-top: 20px;
 }
 
-.dropbtn:hover {
-    background-color: #e95d1c;
+.event-block {
+    margin-bottom: 20px;        /* 각 접종 정보 블록 간의 간격 */
+    padding: 10px;              /* 블록 내부 여백 */
+    border: 1px solid #ddd;     /* 경계선 추가 */
+    background-color: #f9f9f9;  /* 배경색 추가 */
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+.event-block p {
+    margin: 5px 0;              /* 각 항목 간의 간격 */
+    padding-left: 20px;         /* 항목에 대한 들여쓰기 */
 }
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1dfc3;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-/* 예방접종 정보가 있는 날짜 강조 */
-.day.highlight {
-    background-color: #f8b400;
-    color: white;
-    font-weight: bold;
-}
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-  }
-  
-  .close-button {
-    float: right;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
