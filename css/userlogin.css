@@ -33,7 +33,7 @@ body {
 
 h1 {
   font-size: 32px;
-  color: #ff6f00;
+  color: #6894ff;
   margin-bottom: 40px;
   font-weight: bold;
 }
@@ -53,13 +53,13 @@ input {
 }
 
 input:focus {
-  border-color: #ff6f00;
+  border-color: #6894ff;
   outline: none;
 }
 
 button {
   padding: 15px;
-  background-color: #ff6f00;
+  background-color: #6894ff;
   color: white;
   border: none;
   border-radius: 8px;
@@ -70,7 +70,7 @@ button {
 }
 
 button:hover {
-  background-color: #e65a00;
+  background-color: #6894ff;
 }
 
 .message {
@@ -85,7 +85,7 @@ button:hover {
 }
 
 .signup-link a {
-  color: #ff6f00;
+  color: #6894ff;
   text-decoration: none;
 }
 

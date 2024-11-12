@@ -46,7 +46,7 @@ h1 {
 }
 
 .postal-btn {
-  background-color: #ff6600;
+  background-color: #6894ff;
   color: white;
   border: none;
   padding: 10px;
@@ -57,11 +57,11 @@ h1 {
 }
 
 .postal-btn:hover {
-  background-color: #ff4500;
+  background-color: #5182ff;
 }
 
 .check-btn {
-  background-color: #ff6600;
+  background-color: #6894ff;
   color: white;
   border: none;
   padding: 10px;
@@ -71,7 +71,7 @@ h1 {
 }
 
 .check-btn:hover {
-  background-color: #ff4500;
+  background-color: #5182ff;
 }
 
 .toggle-password {
@@ -95,7 +95,7 @@ input[type="text"] {
 .register-btn {
   width: 100%;
   padding: 15px;
-  background-color: #ff6600;
+  background-color: #6894ff;
   color: white;
   border: none;
   font-size: 18px;
@@ -104,5 +104,5 @@ input[type="text"] {
 }
 
 .register-btn:hover {
-  background-color: #ff4500;
+  background-color: #5182ff;
 }

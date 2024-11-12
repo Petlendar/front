@@ -19,7 +19,7 @@ body {
   
   h1 {
     text-align: center;
-    color: #f46f32;
+    color: #6894ff;
     font-size: 24px;
   }
   
@@ -42,7 +42,7 @@ body {
   }
   
   button {
-    background-color: #f46f32;
+    background-color: #6894ff;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -53,6 +53,6 @@ body {
   }
   
   button:hover {
-    background-color: #e95d1c;
+    background-color: #5182ff;
   }
   
