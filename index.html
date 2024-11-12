@@ -5,45 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PETLENDAR</title>
   <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/header.css"> <!--header 영역-->
 </head>
 <body>
-  <header>
-    <h1>PETLENDAR</h1>
-    <nav>
-      <a href="#">Community</a>
-      <div class="dropdown">
-        <button class="dropbtn">접종관리</button>
-        <div class="dropdown-content">
-          <a href="./VaccinRegister.html">예방접종 등록</a>
-          <a href="./VaccinDetail.html">예방 접종 정보 상세보기</a>
-        </div>
-      </div>
-      <button id="loginBtn" style="display: none;">로그인</button>
-      <button id="registerBtn" style="display: none;">회원가입</button>
-      <button id="myInfoBtn" style="display: none;">내 정보</button>
-      <button id="logoutBtn" style="display: none;">로그아웃</button>
-    </nav>
-  </header>
 
+  <!-- 여기에서 헤더가 삽입됩니다 -->
+  <div id="header-container"></div>
+
+  <img src="./images/m-post-card2.png" style="width: 100vw; height: auto;" >
+  
   <section id="main-section">
-    <div class="calendar-container">
-      <div id="calendar-header">
-        <button id="prevMonth">◀</button>
-        <h2>JANUARY 2024</h2>
-        <button id="nextMonth">▶</button>
+    <div class="main-content">
+      <!-- 캘린더 영역 -->
+      <div class="calendar-area">
+        <div id="calendar-header">
+          <button id="prevMonth">◀</button>
+          <h2 id="calendar-title">JANUARY 2024</h2>
+          <button id="nextMonth">▶</button>
+        </div>
+        <div id="calendar-days" class="calendar-days"></div>
       </div>
-      <div id="calendar-days" class="calendar-days"></div>
+
+      <!-- 텍스트 표시 영역: 캘린더 오른쪽에 표시될 텍스트 -->
+      <div id="info-area">
+        <p id="vaccination-info">선택된 날짜에 대한 정보가 여기에 표시됩니다.</p>
+      </div>
     </div>
 
-    <div class="pet-selection">
-      <h3>Select your pet</h3>
+    <!-- 반려동물 선택 영역: 캘린더 아래로 배치 -->
+    <div class="pet-area">
+      <h3>내 반려동물 보기</h3>
       <div id="pet-list">
         <!-- 반려동물 이미지가 여기에 로드됩니다 -->
       </div>
     </div>
   </section>
 
-  <script src="./js/Calendar.js"></script>
+  <script>
+    // header.html 파일을 가져와서 #header-container에 삽입
+    fetch('./header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header-container').innerHTML = data;
+      })
+      .catch(error => console.error('Error loading header:', error));
+  </script>
+  
+  <script type="module" src="./js/Calendar.js"></script>
   <script src="./js/main.js"></script>
 </body>
 </html>
