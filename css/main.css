@@ -68,11 +68,11 @@ button {
 }
 
 .day:hover {
-    background-color: #ddd;
+    background-color: #5182FF;
 }
 
 .highlight {
-    background-color: #ffeb3b;
+    background-color: #6894FF;
 }
 
 /* 캘린더 오른쪽 정보 영역 */
