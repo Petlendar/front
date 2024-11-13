@@ -41,7 +41,8 @@ window.addEventListener('DOMContentLoaded', checkLoginStatus);
 
 // 로그인 버튼 클릭 이벤트
 loginButton.addEventListener('click', () => {
-    window.location.href = './user/login.html';
+    const currentUrl = window.location.href;
+    window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
 });
 
 // 회원가입 버튼 클릭 이벤트
