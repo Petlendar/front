@@ -46,7 +46,7 @@ document.getElementById('login-btn').addEventListener('click', async function() 
 
       // 로그인 성공 시, 쿼리 파라미터에서 리다이렉트 URL 읽기
       const params = new URLSearchParams(window.location.search);
-      const redirectUrl = params.get('redirect') || '/'; // 리다이렉트 URL이 없으면 기본경로로 이동
+      const redirectUrl = params.get('redirect') || '../index.html'; // 리다이렉트 URL이 없으면 기본경로로 이동
 
        // 리다이렉트 URL로 이동
        window.location.href = redirectUrl;
