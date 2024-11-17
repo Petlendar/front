@@ -3,25 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>게시글 상세 보기</title>
-    <link rel="stylesheet" href="./css/boardindex.css">
+    <title>게시글 상세 페이지</title>
+    <link rel="stylesheet" href="./css/boardpost.css">
+    <link rel="stylesheet" href="./css/boardcomment.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>게시글 상세 보기</h1>
-        <div id="postDetail"></div>
-        <div>
-            <button id="modifyPostBtn">수정</button>
-            <button id="deletePostBtn">삭제</button>
+    <!-- 상단바 -->
+    <header>
+        <div class="navbar">
+            <a href="index.html" class="logo">PETLENDAR</a>
+            <nav>
+                <a href="index.html">Homepage</a>
+                <a href="boardindex.html">Community</a>
+                <a href="chatbot.html">Chatbot</a>
+            </nav>
+            <div class="auth-buttons">
+                <button id="login-btn">로그인</button>
+                <button id="signup-btn">회원가입</button>
+                <button id="logout-btn">로그아웃</button>
+            </div>
         </div>
+    </header>
 
-        <h2>댓글</h2>
-        <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
-        <button id="submitCommentBtn">댓글 달기</button>
-        <div id="commentList"></div>
-        <button id="backToIndexBtn">목록으로</button>
+    <!-- 컨텐츠 영역 -->
+    <div class="container">
+        <!-- 게시글 상세 영역 -->
+        <section id="post-detail" class="post-detail">
+            <h1 id="post-title"></h1>
+            <div class="post-meta">
+                <p id="post-category"></p>
+                <p id="post-user"></p>
+                <p id="post-date"></p>
+            </div>
+            <p id="post-content"></p>
+        </section>
+
+        <!-- 댓글 목록 영역 -->
+        <section id="comments-section" class="comments-section">
+            <h2>댓글</h2>
+            <div id="comments-list"></div>
+        </section>
     </div>
-
-    <script src="./js/boardpost.js"></script>
+    
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.style.zoom = "67%";
+        });
+    </script>
+    <script type="module" src="./js/boardpost.js"></script>
+    <script type="module" src="./js/boardcomment.js"></script>
 </body>
 </html>
