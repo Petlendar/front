@@ -1,137 +1,120 @@
+import apiClient from './interceptor.js';
+
+const loginButton = document.getElementById('login-btn');
+const signupButton = document.getElementById('signup-btn');
+const logoutButton = document.getElementById('logout-btn');
 const urlParams = new URLSearchParams(window.location.search);
-const boardId = urlParams.get('boardId');
+const postId = urlParams.get('id');
 
-document.getElementById('backToIndexBtn').addEventListener('click', () => {
-    window.location.href = '../boardpost.html';
+let currentUserId = null; // 현재 로그인된 사용자 ID
+let postAuthorId = null; // 게시글 작성자 ID
+
+// 로그인 상태 확인
+async function checkLoginStatus() {
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+        loginButton.style.display = 'none';
+        signupButton.style.display = 'none';
+
+        // 로그인된 사용자 정보 로드
+        await loadUserInfo();
+    } else {
+        loginButton.style.display = 'block';
+        signupButton.style.display = 'block';
+        currentUserId = null; // 초기화
+    }
+}
+// 로그아웃 버튼 클릭 이벤트
+logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('accessToken'); // 토큰 삭제
+    alert('로그아웃 되었습니다.');
+    window.location.href = './index.html'; // 리다이렉션 경로 설정
 });
+// 로그인된 사용자 정보 로드
+async function loadUserInfo() {
+    try {
+        const response = await apiClient.get('/user/api/user');
+        currentUserId = response.data.body.id; // 사용자 ID 저장
+        console.log('현재 로그인된 사용자 ID:', currentUserId);
+    } catch (error) {
+        console.error('로그인된 사용자 정보 조회 실패:', error);
+        currentUserId = null; // 초기화
+    }
+}
 
-document.getElementById('submitCommentBtn').addEventListener('click', registerComment);
-
+// 게시글 상세 조회
 async function loadPostDetail() {
     try {
-        const response = await fetch(`http://localhost:8080/posts/${boardId}`);
-        const data = await response.json();
+        const response = await apiClient.get(`/board/open-api/board/${postId}`);
+        const post = response.data.body;
+        postAuthorId = post.userId; // 게시글 작성자 ID 저장
+        console.log('게시글 작성자 ID:', postAuthorId);
 
-        const postDetailDiv = document.getElementById('postDetail');
-        postDetailDiv.innerHTML = `
-            <h3>${data.body.title}</h3>
-            <p>${data.body.content}</p>
-            <p>작성일: ${data.body.registeredAt}</p>
-        `;
-    } catch (error) {
-        console.error('게시글 불러오기 실패:', error);
-    }
-}
+        // 게시글 정보 표시
+        document.getElementById('post-title').textContent = post.title;
+        document.getElementById('post-category').textContent = `카테고리: ${post.category}`;
+        document.getElementById('post-user').textContent = `작성자: ${post.userId}`;
+        document.getElementById('post-date').textContent = `등록일: ${new Date(post.registeredAt).toLocaleDateString()}`;
 
-async function registerComment() {
-    const content = document.getElementById('commentContent').value;
+        const postContentContainer = document.getElementById('post-content');
+        postContentContainer.innerHTML = post.content;
 
-    if (!content) {
-        alert('댓글 내용을 입력하세요.');
-        return;
-    }
-
-    try {
-        const response = await fetch(`http://localhost:8080/comments`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                content: content,
-                boardId: boardId
-            }),
-        });
-
-        const data = await response.json();
-        if (data.result.resultCode === 200) {
-            alert('댓글이 등록되었습니다.');
-            document.getElementById('commentContent').value = ''; // 댓글 입력란 초기화
-            loadComments(); // 댓글 목록 다시 불러오기
+        // 현재 사용자와 게시글 작성자 비교 후 수정/삭제 표시
+        if (currentUserId && currentUserId === postAuthorId) {
+            console.log('수정/삭제 버튼 추가 조건 충족');
+            addEditDeleteTexts();
         } else {
-            alert('댓글 등록에 실패했습니다.');
+            console.log('수정/삭제 버튼 추가 조건 불충족');
         }
     } catch (error) {
-        console.error('댓글 등록 실패:', error);
+        console.error('게시글 상세 조회 오류:', error);
     }
 }
 
-// 댓글 목록 불러오기
-async function loadComments() {
-    const commentListDiv = document.getElementById('commentList');
-    commentListDiv.innerHTML = '';
+// 수정/삭제 텍스트 추가
+function addEditDeleteTexts() {
+    const postDetail = document.getElementById('post-detail');
 
-    try {
-        const response = await fetch(`http://localhost:8080/posts/${boardId}/comments`);
-        const data = await response.json();
+    const actionContainer = document.createElement('div');
+    actionContainer.classList.add('action-container');
+    actionContainer.style.textAlign = 'right';
 
-        if (data.body) {
-            data.body.forEach(comment => {
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment-item';
-                commentElement.innerHTML = `
-                    <p>${comment.content}</p>
-                    <p>댓글 ID: ${comment.commentId}</p>
-                    <button onclick="deleteComment(${comment.commentId})">삭제</button>
-                `;
-                commentListDiv.appendChild(commentElement);
-            });
-        } else {
-            commentListDiv.innerHTML = '<p>댓글이 없습니다.</p>';
-        }
-    } catch (error) {
-        console.error('댓글 목록 불러오기 실패:', error);
-    }
-}
+    const editText = document.createElement('span');
+    editText.textContent = '수정';
+    editText.classList.add('action-text');
+    editText.style.marginRight = '10px';
+    editText.onclick = () => {
+        window.location.href = `./boardmodify.html?id=${postId}`;
+    };
 
-// 댓글 삭제 기능
-async function deleteComment(commentId) {
-    if (confirm('댓글을 삭제하시겠습니까?')) {
-        try {
-            const response = await fetch(`http://localhost:8080/comments/${commentId}`, {
-                method: 'DELETE',
-            });
-
-            const data = await response.json();
-            if (data.result.resultCode === 200) {
-                alert('댓글이 삭제되었습니다.');
-                loadComments(); // 댓글 목록 다시 불러오기
-            } else {
-                alert('댓글 삭제에 실패했습니다.');
-            }
-        } catch (error) {
-            console.error('댓글 삭제 실패:', error);
-        }
-    }
-}
-
-// 게시글 수정 기능
-document.getElementById('modifyPostBtn').addEventListener('click', () => {
-    window.location.href = `../boardmodify.html?boardId=${boardId}`;
-});
-
-// 게시글 삭제 기능
-document.getElementById('deletePostBtn').addEventListener('click', async () => {
-    if (confirm('게시글을 삭제하시겠습니까?')) {
-        try {
-            const response = await fetch(`http://localhost:8080/posts/${boardId}`, {
-                method: 'DELETE',
-            });
-
-            const data = await response.json();
-            if (data.result.resultCode === 200) {
+    const deleteText = document.createElement('span');
+    deleteText.textContent = '삭제';
+    deleteText.classList.add('action-text');
+    deleteText.onclick = async () => {
+        if (confirm('정말로 삭제하시겠습니까?')) {
+            try {
+                await apiClient.post(`/board/api/board/unregister/${postId}`);
                 alert('게시글이 삭제되었습니다.');
-                window.location.href = './index.html'; // 삭제 후 목록 페이지로 이동
-            } else {
+                window.location.href = './boardindex.html';
+            } catch (error) {
+                console.error('게시글 삭제 실패:', error);
                 alert('게시글 삭제에 실패했습니다.');
             }
-        } catch (error) {
-            console.error('게시글 삭제 실패:', error);
         }
+    };
+
+    actionContainer.appendChild(editText);
+    actionContainer.appendChild(deleteText);
+    postDetail.appendChild(actionContainer);
+}
+
+// 초기 데이터 로드
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        await checkLoginStatus(); // 로그인 상태 확인
+        await loadPostDetail();  // 게시글 상세 정보 로드
+    } catch (error) {
+        console.error('초기화 중 오류 발생:', error);
     }
 });
-
-// 페이지 로드 시 게시글 상세 정보 및 댓글 목록 불러오기
-loadPostDetail();
-loadComments();
-
