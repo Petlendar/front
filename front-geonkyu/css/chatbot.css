@@ -1,0 +1,181 @@
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f2f5;
+    }
+
+    .chat-container {
+        width: 650px;
+        max-width: 100%;
+        height: 600px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-header {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        display: inline-block;
+        word-wrap: break-word;
+    }
+    .message.user {
+        background-color: #007bff;
+        color: #ffffff;
+        align-self: flex-end;
+        border-bottom-right-radius: 0;
+        text-align: right;
+    }
+    .message.bot {
+        background-color: #f1f1f1;
+        color: #333333;
+        max-width: 90%;
+        border-bottom-left-radius: 0;
+        text-align: left;
+    }
+
+    .feature-list {
+        margin-top: 10px;
+        padding-left: 20px;
+    }
+
+    .feature-list li {
+        margin-bottom: 5px;
+    }
+
+    .chat-input-container {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #ddd;
+        background-color: #f9f9f9;
+        padding: 10px;
+        position: relative;
+    }
+
+    .attachment-icon {
+        position: absolute;
+        left: 10px;
+        cursor: pointer;
+    }
+
+    .clip-icon svg {
+        fill: #007bff;
+        transition: fill 0.3s;
+    }
+
+    .clip-icon svg:hover {
+        fill: #0056b3;
+    }
+
+    .chat-input {
+        display: flex;
+        align-items: flex-end;
+        flex: 1;
+        margin-left: 40px;
+    }
+
+    .chat-input textarea {
+        flex: 1;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        outline: none;
+        resize: none;
+        height: 40px;
+        max-height: 80px;
+        overflow-y: auto;
+    }
+
+    .chat-input button {
+        padding: 10px 15px;
+        margin-left: 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        height: 40px;
+    }
+
+    .chat-input button:hover {
+        background-color: #0056b3;
+    }
+    
+    /* 미리보기 컨테이너 */
+    .image-preview-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: #f0f0f0;
+        padding: 5px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 8px; /* chat-input-container 위에 약간의 간격 */
+    }
+
+    /* 이미지 미리보기 (작은 크기) */
+    .image-preview-small {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+    }
+
+
+    /* X 버튼 스타일 */
+    .close-button {
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #ff5c5c;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    /* 채팅창 내 이미지 크기 제한 (큰 크기) */
+    .image-preview-large {
+        max-width: 60%; /* 채팅창 폭의 80%로 제한 */
+        max-height: 200px; /* 최대 높이 제한 */
+        border-radius: 8px;
+        margin-top: 5px;
+    }
+        /* 이미지 메시지 (파란색 말풍선 없이 단독으로 표시) */
+    .image-message {
+        display: flex;
+        justify-content: flex-end; /* 오른쪽 정렬 */
+        margin-bottom: 15px;
+    }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>블로그 메인화면</title>
+    <link rel="stylesheet" href="./css/boardindex.css">
+    <!-- axios CDN 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 상단바 -->
+        <header>
+            <div class="navbar">
+                <a href="index.html" class="logo">PETLENDAR</a>
+                <nav>
+                    <a href="boardindex.html">Community</a>
+                    <a href="mypage.html">Mypage</a>
+                    <a href="chatbot.html">Chatbot</a>
+                </nav>
+                <div class="auth-buttons">
+                    <button id="login-btn">로그인</button>
+                    <button id="signup-btn">회원가입</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 카드 -->
+        <section class="main-card">
+            <div class="main-card-background"></div>
+        </section>
+        
+
+        <!-- 검색 영역 -->
+        <section class="search-area">
+            <input type="text" id="search-bar" placeholder="search">
+            <button id="search-btn">검색</button>
+            <button id="new-post-btn">글쓰기</button>
+        </section>
+
+        <!-- 게시글 목록 -->
+        <section id="post-list" class="post-list">
+            <!-- 게시글이 동적으로 추가될 예정 -->
+        </section>
+
+        <!-- 더보기 버튼 -->
+        <button id="load-more" class="load-more" style="display: none;">더보기</button>
+    </div>
+    
+    <script type="module" src="./js/boardindex.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.style.zoom = "67%";
+        });
+    </script>
+</body>
+</html>

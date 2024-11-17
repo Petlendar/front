@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예방접종 등록</title>
+  <link rel="stylesheet" href="./css/VaccinRegister.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="background-content">
+      <img src="./images/logo.png" alt="PETLENDAR Logo" class="logo">
+      <h1 class="background-text">반려동물의 건강을 위한 예방접종 관리 시스템</h1>
+    </div>
+    <div class="container">
+      <h1 class="title">예방접종 등록</h1>
+      <form id="vaccination-form" class="form">
+        <div class="input-group">
+          <label for="pet-select">반려동물 선택:</label>
+          <select id="pet-select" required>
+            <option value="">반려동물을 선택하세요</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="type">예방접종 유형:</label>
+          <select id="type" required>
+            <option value="DHIPPL">혼합예방주사</option>
+            <option value="CORONA_VIRUS">코로나 바이러스성 장염</option>
+            <option value="KENNEL_COUGH">기관, 기관지염</option>
+            <option value="RABIES">광견병</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="date">접종 날짜:</label>
+          <input type="date" id="date" required>
+        </div>
+        <button type="submit" class="submit-btn">등록</button>
+        <p id="response-message" class="response-message"></p>
+      </form>
+    </div>
+  </div>
+  <script src="./js/VaccinRegister.js"></script>
+</body>
+</html>
