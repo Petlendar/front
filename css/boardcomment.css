@@ -1,0 +1,125 @@
+/* 댓글 섹션 */
+.comments-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comments-section h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 댓글 영역 */
+.comment {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column; /* 댓글 내용을 세로로 배치 */
+}
+
+/* 댓글 내용 */
+.comment p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px; /* 작성자와의 간격 */
+}
+
+/* 댓글 메타 정보 (작성자와 날짜) */
+.comment-meta {
+    font-size: 12px;
+    color: #666;
+    text-align: left; /* 왼쪽 정렬 */
+    margin-top: 5px;
+}
+
+/* 댓글 액션 (수정/삭제) */
+.comment-actions {
+    display: flex;
+    justify-content: flex-end; /* 버튼 오른쪽 정렬 */
+    gap: 10px; /* 수정/삭제 버튼 간격 */
+    margin-top: 5px; /* 댓글 내용과 버튼 사이 간격 */
+}
+
+/* 액션 버튼 스타일 */
+.action-button {
+    color: #4caf50;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 13px;
+}
+
+.action-button:hover {
+    color: #45a049;
+}
+
+/* 댓글 입력창 */
+.comment-form {
+    margin-top: 20px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.comment-form button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.comment-form button:hover {
+    background-color: #45a049;
+}
+
+/* 수정 입력 폼 */
+.edit-comment-form {
+    margin-top: 10px;
+}
+
+.edit-comment-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.edit-comment-form button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.edit-comment-form button:last-child {
+    background-color: #DC3545; /* 취소 버튼 색상 */
+}
+
+.edit-comment-form button:hover {
+    filter: brightness(90%);
+}
