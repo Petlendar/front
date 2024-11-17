@@ -32,7 +32,7 @@ header .navbar {
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
-    color:black;
+    color: black;
     margin-left: calc((100% - 1216px) / 2); /* 메인 카드와 왼쪽 정렬 */
 }
 /* 방문한 링크 색상을 기본 색상으로 유지 */
@@ -46,19 +46,32 @@ header .navbar {
     color: #000;
 }
 
-.auth-buttons button {
-    background-color: #ff7f50;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    margin-left: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
 .auth-buttons {
     display: flex;
     gap: 10px; /* 버튼 사이 간격 추가 */
 }
+
+/* 로그인, 회원가입 버튼 */
+.auth-buttons button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* 로그아웃 버튼 */
+#logout-btn {
+    background-color: #4caf50; /* 동일한 색상 */
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* 상단바 끝 */
 .main-card {
     width: 100%;
     max-width: 1216px;
@@ -70,7 +83,7 @@ header .navbar {
 .main-card-background {
     width: 100%;
     height: 100%;
-    background-image: url('/images/m-post-card2.png'); 
+    background-image: url('../images/m-post-card2.png'); 
     background-size: cover;
     background-position: center;
     position: absolute;
@@ -100,7 +113,7 @@ header .navbar {
 #search-btn, #new-post-btn {
     width: 130px;
     height: 40px;
-    background-color: #ff7f50;
+    background-color: #4caf50;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -151,9 +164,23 @@ header .navbar {
 }
 
 .post .post-meta {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
     font-size: 16px;
     font-weight: 500;
     color: #777;
+    margin-top: 5px;
+}
+
+/* 게시글 링크 스타일 제거 */
+.post a {
+    text-decoration: none;
+    color: inherit; /* 부모 요소의 색상을 상속 */
+}
+
+/* 마우스 오버 시 색상 유지 */
+.post a:hover {
+    color: inherit;
 }
 
 /* 더보기 버튼 */
@@ -162,7 +189,7 @@ header .navbar {
     width: 130px;
     height: 40px;
     margin: 20px auto;
-    background-color: #ff7f50;
+    background-color: #4caf50;
     color: #fff;
     border: none;
     cursor: pointer;
