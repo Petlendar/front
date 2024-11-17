@@ -5,43 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> PETLENDAR </title>
     <link rel="stylesheet" href="./css/chatbot.css">
+    <link rel="stylesheet" href="./css/header.css"> <!--header 영역-->
 </head>
 <body>
+    <!-- 여기에서 헤더가 삽입됩니다 -->
+    <div id="header-container"></div>
 
-<div class="chat-container">
-    <div class="chat-header">PETLENDAR</div>
-    <div class="chat-messages" id="chatMessages">
-        <div class="message bot">
-            <p>안녕하세요! 아래의 기능 중 하나를 선택하여 입력해주세요</p>
-            <ul class="feature-list">
-                <li><strong>음식추천</strong> - 반려동물에게 맞는 음식 추천</li>
-                <li><strong>상담</strong> - 반려동물 관련 일반 상담</li>
-                <li><strong>모니터링</strong> - 반려동물 건강 모니터링</li>
-                <li><strong>예방접종</strong> - 예방 접종 정보 제공</li>
-            </ul>
+    <div class="chat-container">
+        <div class="chat-header">PETLENDAR</div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <p>안녕하세요! 아래의 기능 중 하나를 선택하여 입력해주세요</p>
+                <ul class="feature-list">
+                    <li><strong>음식추천</strong> - 반려동물에게 맞는 음식 추천</li>
+                    <li><strong>상담</strong> - 반려동물 관련 일반 상담</li>
+                    <li><strong>모니터링</strong> - 반려동물 건강 모니터링</li>
+                    <li><strong>예방접종</strong> - 예방 접종 정보 제공</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 기능 버튼 컨테이너 추가 -->
+        <div id="buttonContainer" class="feature-buttons"></div>
+        <div class="chat-input-container">
+            <div class="attachment-icon">
+                <label for="fileInput" class="clip-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21.44 11.05L12.93 19.6c-1.88 1.88-4.9 1.88-6.78 0a4.81 4.81 0 010-6.78L12 7.96a2.88 2.88 0 114.08 4.08l-5.1 5.1a.75.75 0 11-1.06-1.06l5.1-5.1a1.38 1.38 0 10-1.95-1.96l-5.86 5.86a3.31 3.31 0 004.68 4.68l8.52-8.53a5.31 5.31 0 10-7.52-7.52L4.67 10.9a.75.75 0 11-1.06-1.06L9.7 3.76a6.81 6.81 0 019.64 9.64z"/>
+                    </svg>
+                </label>
+                <input type="file" id="fileInput" style="display: none;" accept="image/*">
+            </div>
+            <div class="chat-input">
+                <textarea id="messageInput" placeholder="Type your message here..."></textarea>
+                <button id="sendButton">Send</button>
+            </div>
         </div>
     </div>
-    <div class="chat-input-container">
-        <div class="attachment-icon">
-            <label for="fileInput" class="clip-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M21.44 11.05L12.93 19.6c-1.88 1.88-4.9 1.88-6.78 0a4.81 4.81 0 010-6.78L12 7.96a2.88 2.88 0 114.08 4.08l-5.1 5.1a.75.75 0 11-1.06-1.06l5.1-5.1a1.38 1.38 0 10-1.95-1.96l-5.86 5.86a3.31 3.31 0 004.68 4.68l8.52-8.53a5.31 5.31 0 10-7.52-7.52L4.67 10.9a.75.75 0 11-1.06-1.06L9.7 3.76a6.81 6.81 0 019.64 9.64z"/>
-                </svg>
-            </label>
-            <input type="file" id="fileInput" style="display: none;" accept="image/*">
-        </div>
-        <div class="chat-input">
-            <textarea id="messageInput" placeholder="Type your message here..."></textarea>
-            <button id="sendButton">Send</button>
-        </div>
-    </div>
-</div>
+    <script>
+        // header.html 파일을 동기적으로 로드하여 #header-container에 삽입
+        const request = new XMLHttpRequest();
+        request.open("GET", "./header.html", false);  // false는 동기적 요청
+        request.send(null);
+    
+        if (request.status === 200) {
+            document.getElementById("header-container").innerHTML = request.responseText;
+        } else {
+            console.error("Error loading header:", request.status);
+        }
+    </script>
+    
+    <!-- 헤더 관련 JS 파일 추가 -->
+    <script src="./js/header.js"></script>
+    <!-- axios CDN 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<!-- axios CDN 추가 -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-<!-- JavaScript 파일 로드 (모듈 지정) -->
-<script src="./js/chatbot.js" type="module"></script>
-
+    <!-- JavaScript 파일 로드 (모듈 지정) -->
+    <script src="./js/chatbot.js" type="module"></script>
+    
 </body>
 </html>
