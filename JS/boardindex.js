@@ -7,6 +7,7 @@ const searchBar = document.getElementById('search-bar');
 const newPostBtn = document.getElementById('new-post-btn');
 const loginButton = document.getElementById('login-btn');
 const signupButton = document.getElementById('signup-btn');
+const logoutButton = document.getElementById('logout-btn');
 
 let page = 0;
 const size = 9;
@@ -18,15 +19,16 @@ let allPosts = []; // 전체 게시글을 저장할 배열
 function checkLoginStatus() {
     const token = localStorage.getItem('accessToken');
     if (token) {
-        // 토큰이 있으면 로그인 상태로 간주하고 버튼 숨김
         loginButton.style.display = 'none';
         signupButton.style.display = 'none';
+        logoutButton.style.display = 'block'; // 로그아웃 버튼 표시
     } else {
-        // 토큰이 없으면 로그인 버튼과 회원가입 버튼 표시
         loginButton.style.display = 'block';
         signupButton.style.display = 'block';
+        logoutButton.style.display = 'none'; // 로그아웃 버튼 숨김
     }
 }
+
 // 날짜 포맷 함수
 function getFormattedDate() {
     const now = new Date();
@@ -36,7 +38,6 @@ function getFormattedDate() {
 
 // 초기 게시글 로드
 window.addEventListener('DOMContentLoaded', loadAllPosts);
-// 페이지 로드 시 로그인 상태 확인
 window.addEventListener('DOMContentLoaded', checkLoginStatus);
 
 // 로그인 버튼 클릭 이벤트
@@ -49,6 +50,15 @@ loginButton.addEventListener('click', () => {
 signupButton.addEventListener('click', () => {
     window.location.href = './user/signup.html';
 });
+
+// 로그아웃 버튼 클릭 이벤트
+logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('accessToken'); // 토큰 삭제
+    alert('로그아웃 되었습니다.');
+    const currentUrl = window.location.href;
+    window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
+});
+
 // 더보기 버튼 클릭 이벤트
 loadMoreButton.addEventListener('click', () => {
     page++;
@@ -59,7 +69,7 @@ loadMoreButton.addEventListener('click', () => {
 searchBtn.addEventListener('click', () => {
     const query = searchBar.value.trim();
     if (query === "") {
-        loadAllPosts(); // 검색어가 비어있을 경우 전체 게시글을 다시 로드
+        loadAllPosts();
     } else {
         searchPosts(query);
     }
@@ -77,16 +87,16 @@ async function loadAllPosts() {
             params: {
                 startDate: startDate,
                 endDate: endDate,
-                page: 0, // 전체 게시글 로드
-                size: 9999, // 충분히 큰 값을 설정하여 전체 데이터를 가져옴
+                page: 0,
+                size: 9999,
                 sort: "registeredAt,desc"
             }
         });
 
-        allPosts = response.data.body; // 전체 게시글을 allPosts 배열에 저장
-        page = 0; // 페이지 초기화
-        postList.innerHTML = ''; // 기존 게시글 초기화
-        displayPosts(); // 첫 페이지 게시글 표시
+        allPosts = response.data.body;
+        page = 0;
+        postList.innerHTML = '';
+        displayPosts();
     } catch (error) {
         console.error('전체 게시글 로드 실패:', error);
     }
@@ -107,17 +117,21 @@ function displayPosts() {
     postsToDisplay.forEach(post => {
         const postElement = document.createElement('div');
         postElement.classList.add('post');
+        
+        // 게시글 클릭 시 해당 게시글의 ID로 상세 페이지로 이동하는 링크 추가
         postElement.innerHTML = `
-            <img src="${post.boardImage?.imageUrl || './images/default-image.webp'}" alt="게시글 이미지">
-            <h3>${post.title}</h3>
-            <div class="post-meta">
-                <span>${post.userId}</span> · <span>${new Date(post.registeredAt).toLocaleDateString()}</span>
-            </div>
+            <a href="boardpost.html?id=${post.boardId}">
+                <img src="${post.boardImage?.imageUrl || './images/default-image.webp'}" alt="게시글 이미지">
+                <h3>${post.title}</h3>
+                <div class="post-meta">
+                    <span>${post.userId}</span> · <span>${new Date(post.registeredAt).toLocaleDateString()}</span>
+                </div>
+            </a>
         `;
+
         postList.appendChild(postElement);
     });
 
-    // 더 이상 불러올 게시글이 없으면 더보기 버튼 숨기기
     loadMoreButton.style.display = end < allPosts.length ? 'block' : 'none';
 }
 
@@ -146,11 +160,11 @@ async function searchPosts(query) {
                 sort: "registeredAt,desc"
             }
         });
-        
-        allPosts = response.data.body; // 검색 결과로 전체 게시글을 갱신
-        page = 0; // 페이지 초기화
-        postList.innerHTML = ''; // 기존 게시글 초기화
-        displayPosts(); // 첫 페이지 게시글 표시
+
+        allPosts = response.data.body;
+        page = 0;
+        postList.innerHTML = '';
+        displayPosts();
 
         if (allPosts.length === 0) {
             postList.innerHTML = '<p>검색 결과가 없습니다.</p>';
