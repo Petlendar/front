@@ -81,6 +81,53 @@ body {
     text-align: left; /* 텍스트 정렬 */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 말풍선 그림자 */
 }
+
+/* 기능 카드 스타일 */
+.feature-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between; /* 카드 간격 균등 분배 */
+    margin-top: 10px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.card {
+    flex: 1 1 calc(50% - 20px); /* 한 줄에 두 개 (50% 크기에서 간격 제외) */
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 120px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card i {
+    width: 60px;
+    height: 60px;
+    
+}
+
+.card h3 {
+    font-size: 14px;
+    color: #333;
+}
+
+.card p {
+    font-size: 12px;
+    color: #555;
+}
+
 /* 기능 목록 */
 .feature-list {
     margin-top: 10px;
@@ -101,26 +148,11 @@ body {
     position: relative;
 }
 
-.attachment-icon {
-    position: absolute;
-    left: 10px;
-    cursor: pointer;
-}
-
-.clip-icon svg {
-    fill: #4caf50;
-    transition: fill 0.3s;
-}
-
-.clip-icon svg:hover {
-    fill: #45a049;
-}
-
 .chat-input {
     display: flex;
     align-items: flex-end;
     flex: 1;
-    margin-left: 40px;
+    margin-left: 20px;
 }
 
 .chat-input textarea {
@@ -241,35 +273,98 @@ body {
     background-color: #45a049;
 }
 
-/* 반려동물 버튼 스타일 */
-.pet-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+/* 반려동물 카드 컨테이너 */
+.pet-cards {
+    display: grid; /* CSS Grid 사용 */
+    grid-template-columns: repeat(4, 1fr); /* 한 줄에 4개의 카드 */
+    gap: 10px; /* 카드 간 간격 줄임 */
     padding: 10px;
     justify-content: center;
-    margin-top: 10px;
 }
 
-.pet-button {
-    padding: 10px 15px;
-    background-color: #28a745; /* 초록색 */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
+/* 반려동물 카드 */
+.pet-cards .card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 약간의 그림자 효과 */
+    transition: transform 0.3s ease;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.pet-button:hover {
-    background-color: #218838; /* 더 짙은 초록색 */
-    transform: scale(1.05); /* 약간 확대 */
+.pet-cards .card:hover {
+    transform: translateY(-3px); /* 호버 시 약간 위로 이동 */
 }
 
-.pet-button:active {
-    background-color: #1e7e34; /* 가장 짙은 초록색 */
-    transform: scale(0.95); /* 클릭 시 살짝 축소 */
+/* 반려동물 이미지 */
+.pet-image {
+    width: 60px; /* 이미지 크기 줄임 */
+    height: 60px;
+    border-radius: 50%; /* 둥근 이미지 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    margin-bottom: 8px;
+}
+
+/* 반려동물 이름 */
+.pet-cards .card h3 {
+    font-size: 0.9rem; /* 이름 폰트 크기 줄임 */
+    color: #333;
+    margin: 5px 0 0 0;
+}
+
+/* 반응형 - 작은 화면에서 카드 크기 조정 */
+@media (max-width: 768px) {
+    .pet-cards {
+        grid-template-columns: repeat(2, 1fr); /* 작은 화면에서는 한 줄에 2개 */
+    }
+}
+
+@media (max-width: 480px) {
+    .pet-cards {
+        grid-template-columns: repeat(1, 1fr); /* 더 작은 화면에서는 한 줄에 1개 */
+    }
+}
+
+/* 로딩 모션 컨테이너 */
+.typing-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* 점 사이 간격 */
+    height: 20px; /* 컨테이너 높이 */
+}
+
+/* 각 점 스타일 */
+.typing-indicator span {
+    width: 8px; /* 점 크기 */
+    height: 8px;
+    background-color: #4caf50; /* 점 색상 */
+    border-radius: 50%; /* 둥근 점 */
+    animation: typing-animation 1.5s infinite ease-in-out;
+}
+
+/* 각 점에 다른 애니메이션 지연을 추가 */
+.typing-indicator span:nth-child(1) {
+    animation-delay: 0s;
+}
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* 점이 나타났다 사라지는 애니메이션 */
+@keyframes typing-animation {
+    0%, 80%, 100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
