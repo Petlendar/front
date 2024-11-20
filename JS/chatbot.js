@@ -1,230 +1,193 @@
 import apiClient from './interceptor.js'; // 토큰 발행 및 갱신을 위한 apiClient
 
 const apiEndpoints = {
-    "음식추천": "http://211.193.232.196:5000/food",
-    "상담": "http://211.193.232.196:5000/petadvice",
-    "모니터링": "http://211.193.232.196:5000/petmonitor",
-    "예방접종": "http://211.193.232.196:5000/vaccine"
+    "음식추천": "/ai/api/ai/food",
+    "상담": "/ai/api/ai/petadvice",
+    "모니터링": "/ai/api/ai/petmonitor",
+    "예방접종": "/ai/api/ai/vaccine"
 };
 
-// 현재 선택된 기능 추적
-let currentFunction = '';
-let currentPetId = null;
+let currentFunction = ''; // 현재 선택된 기능
+let currentPetId = null; // 현재 선택된 반려동물 ID
 let uploadedFile = null; // 업로드된 파일 저장
 
-// 사용자 메시지 표시
-function displayUserMessage(message) {
+// 로딩 모션 추가
+function showTypingIndicator() {
     const chatMessages = document.getElementById("chatMessages");
-    const userMessage = document.createElement("div");
-    userMessage.classList.add("message", "user");
-    userMessage.innerHTML = `<p>${message}</p>`;
-    chatMessages.appendChild(userMessage);
+    const typingIndicator = document.createElement("div");
+    typingIndicator.classList.add("typing-indicator");
+    typingIndicator.innerHTML = `
+        <span></span>
+        <span></span>
+        <span></span>
+    `;
+    chatMessages.appendChild(typingIndicator);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return typingIndicator; // 로딩 모션 요소 반환
+}
+
+// 로딩 모션 제거
+function hideTypingIndicator(typingIndicator) {
+    if (typingIndicator) typingIndicator.remove();
+}
+
+// 메시지 추가 함수 (유저/봇 공통)
+function addMessage(content, type = 'bot') {
+    const chatMessages = document.getElementById("chatMessages");
+    if (!chatMessages) {
+        console.error("chatMessages 요소를 찾을 수 없습니다.");
+        return;
+    }
+    const message = document.createElement("div");
+    message.classList.add("message", type);
+    message.innerHTML = `<p>${content}</p>`;
+    chatMessages.appendChild(message);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// 기능 버튼 생성
-function createFeatureButtons() {
-    const buttonContainer = document.getElementById("buttonContainer");
+// 기능 카드 초기화 (클릭 이벤트 등록)
+function initializeFeatureCards() {
+    const cards = document.querySelectorAll(".feature-cards .card");
 
-    // 기존 버튼 삭제
-    buttonContainer.innerHTML = '';
+    if (!cards || cards.length === 0) {
+        console.error("기능 카드가 존재하지 않습니다.");
+        return;
+    }
 
-    // 각 기능 버튼 생성
-    Object.keys(apiEndpoints).forEach((feature) => {
-        const button = document.createElement("button");
-        button.classList.add("feature-button");
-        button.innerText = feature;
-
-        // 버튼 클릭 시 동작
-        button.addEventListener("click", () => {
-            displayUserMessage(feature);
-            currentFunction = feature;
-            displayFeatureDescription(feature);
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            const feature = card.getAttribute("data-feature");
+            if (!feature) {
+                console.error("카드에 data-feature 속성이 없습니다.");
+                return;
+            }
+            selectFeature(feature);
         });
-
-        buttonContainer.appendChild(button);
     });
 }
 
-// 파일 업로드 이벤트 추가
-const fileInput = document.getElementById("fileInput");
-fileInput.addEventListener("change", (event) => {
-    uploadedFile = event.target.files[0];
-    const chatInputContainer = document.querySelector(".chat-input-container");
-
-    // 기존 미리보기 제거
-    const existingPreview = document.querySelector(".image-preview-container");
-    if (existingPreview) existingPreview.remove();
-
-    // 새 미리보기 추가
-    if (uploadedFile && uploadedFile.type.startsWith("image/")) {
-        const previewContainer = document.createElement("div");
-        previewContainer.classList.add("image-preview-container");
-
-        const imagePreview = document.createElement("img");
-        imagePreview.src = URL.createObjectURL(uploadedFile);
-        imagePreview.classList.add("image-preview-small");
-
-        const closeButton = document.createElement("span");
-        closeButton.classList.add("close-button");
-        closeButton.innerHTML = "&times;";
-        closeButton.addEventListener("click", () => {
-            uploadedFile = null;
-            previewContainer.remove();
-        });
-
-        previewContainer.appendChild(imagePreview);
-        previewContainer.appendChild(closeButton);
-        chatInputContainer.parentNode.insertBefore(previewContainer, chatInputContainer);
-    }
-});
-
-// 기능 설명 표시
-function displayFeatureDescription(feature) {
-    const chatMessages = document.getElementById("chatMessages");
-    const featureDescriptions = {
-        "음식추천": "음식추천 - 반려동물에 맞는 음식을 추천을 도와드립니다.",
-        "상담": "상담 - 반려동물 관련 상담을 도와드립니다.",
-        "모니터링": "모니터링 - 반려동물의 건강 상태에 대한 질문을 도와드립니다.",
-        "예방접종": "예방 접종 정보에 대한 질문을 도와드립니다."
-    };
-
-    if (featureDescriptions[feature]) {
-        const botMessage = document.createElement("div");
-        botMessage.classList.add("message", "bot");
-        botMessage.innerHTML = `<p>${featureDescriptions[feature]}</p>`;
-        botMessage.innerHTML += '<p>반려동물 이름을 선택해주세요.</p>';
-        chatMessages.appendChild(botMessage);
-
-        // 반려동물 버튼 생성
-        createPetButtons();
-    }
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+// 기능 선택 처리
+function selectFeature(feature) {
+    console.log("선택된 기능:", feature); // 디버깅 로그
+    addMessage(`${feature} 기능을 선택하셨습니다.`, "user");
+    currentFunction = feature;
+    addMessage("반려동물을 선택해주세요.", "bot");
+    createPetCards(); // 반려동물 카드 생성
 }
 
-// 반려동물 이름을 통해 petId 조회
-async function fetchPetIdByName(petName) {
+// 반려동물 카드 생성
+async function createPetCards() {
+    const chatMessages = document.getElementById("chatMessages");
+    if (!chatMessages) {
+        console.error("chatMessages 요소를 찾을 수 없습니다.");
+        return;
+    }
+
+    // 기존 카드 컨테이너 제거
+    const existingCards = document.querySelector(".pet-cards");
+    if (existingCards) existingCards.remove();
+
+    // 새 카드 컨테이너 생성
+    const cardContainer = document.createElement("div");
+    cardContainer.classList.add("pet-cards");
+
     try {
         const response = await apiClient.get('/pet/api/pet');
         const pets = response.data.body;
-        const pet = pets.find(p => p.name === petName);
-        return pet ? pet.petId : null;
+
+        pets.forEach(pet => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.setAttribute("data-pet-id", pet.petId); // 반려동물 ID 저장
+
+            // 카드 내용 구성
+            const img = document.createElement("img");
+            img.src = pet.petImage?.imageUrl || "./images/default-image.webp"; // 이미지 URL 사용, 없으면 기본 이미지
+            img.alt = pet.name;
+            img.classList.add("pet-image");
+
+            const name = document.createElement("h3");
+            name.textContent = pet.name;
+
+            card.appendChild(img);
+            card.appendChild(name);
+
+            // 카드 클릭 이벤트
+            card.addEventListener("click", () => {
+                selectPet(pet); // 선택된 반려동물 처리
+            });
+
+            cardContainer.appendChild(card);
+        });
     } catch (error) {
-        console.error("반려동물 목록 조회 실패:", error);
-        return null;
+        addMessage("반려동물 목록을 불러오는 데 실패했습니다.", "bot");
+        console.error("반려동물 목록 조회 오류:", error);
     }
+
+    chatMessages.appendChild(cardContainer);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // 스크롤을 맨 아래로 이동
 }
 
-// 메시지 전송 및 기능 처리
+// 반려동물 선택 처리
+function selectPet(pet) {
+    console.log("선택된 반려동물:", pet); // 디버깅 로그
+    addMessage(`${pet.name}을(를) 선택하셨습니다.`, "user");
+    addMessage(`${currentFunction}과 관련된 질문을 입력해주세요.`, "bot");
+    currentPetId = pet.petId;
+}
+
+// 메시지 입력 처리
 async function processUserMessage() {
     const userInputField = document.getElementById("messageInput");
     const userMessage = userInputField.value.trim();
-    const chatMessages = document.getElementById("chatMessages");
 
-    if (!userMessage && !uploadedFile) return;
+    if (!userMessage) return;
 
-    displayUserMessage(userMessage);
+    addMessage(userMessage, "user");
+    userInputField.value = ''; // 입력 필드 초기화
 
-    if (apiEndpoints[userMessage]) {
-        currentFunction = userMessage;
-        currentPetId = null;
-        displayFeatureDescription(currentFunction);
+    if (!currentFunction) {
+        addMessage("기능을 먼저 선택해주세요.", "bot");
         return;
     }
 
-    if (currentFunction && !currentPetId) {
-        currentPetId = await fetchPetIdByName(userMessage);
-        const botMessage = document.createElement("div");
-        botMessage.classList.add("message", "bot");
-        if (currentPetId) {
-            botMessage.innerHTML = `<p>반려동물 이름이 확인되었습니다.</p>`;
-            botMessage.innerHTML = `<p>${currentFunction}과 관련된 질문을 해주세요.</p>`;
-        } else {
-            botMessage.innerHTML = `<p>해당 이름의 반려동물을 찾을 수 없습니다. 다시 입력해주세요.</p>`;
-        }
-        chatMessages.appendChild(botMessage);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+    if (!currentPetId) {
+        addMessage("반려동물을 먼저 선택해주세요.", "bot");
         return;
     }
 
-    if (currentFunction && currentPetId) {
-        await sendApiRequest(apiEndpoints[currentFunction], currentPetId, userMessage);
-    }
+    const typingIndicator = showTypingIndicator(); // 로딩 모션 추가
+
+    await sendApiRequest(apiEndpoints[currentFunction], currentPetId, userMessage, typingIndicator);
 }
 
-// 반려동물 버튼 생성
-async function createPetButtons() {
-    const chatMessages = document.getElementById("chatMessages");
-
-    // 기존 버튼 컨테이너 제거
-    const existingButtons = document.querySelector(".pet-buttons");
-    if (existingButtons) existingButtons.remove();
-
-    let pets = [];
+// API 요청
+async function sendApiRequest(apiUrl, petId, userText, typingIndicator) {
     try {
-        const response = await apiClient.get('/pet/api/pet');
-        pets = response.data.body;
-    } catch (error) {
-        console.error("반려동물 목록 조회 실패:", error);
-        return;
-    }
-
-    // 새 버튼 컨테이너 생성
-    const buttonContainer = document.createElement("div");
-    buttonContainer.classList.add("pet-buttons");
-
-    pets.forEach(pet => {
-        const button = document.createElement("button");
-        button.classList.add("pet-button");
-        button.innerText = pet.name;
-
-        // 버튼 클릭 시 이벤트 처리
-        button.addEventListener("click", async () => {
-            displayUserMessage(pet.name); // 사용자 입력 표시
-            currentPetId = pet.petId; // 선택된 반려동물 ID 저장
-            await sendApiRequest(apiEndpoints[currentFunction], currentPetId, null); // API 요청
-        });
-
-        buttonContainer.appendChild(button);
-    });
-
-    // 채팅 메시지 영역에 버튼 추가
-    chatMessages.appendChild(buttonContainer);
-    chatMessages.scrollTop = chatMessages.scrollHeight; // 스크롤을 맨 아래로
-}
-
-
-// API 요청 함수
-async function sendApiRequest(apiUrl, petId, userText) {
-    const chatMessages = document.getElementById("chatMessages");
-    try {
-        const token = localStorage.getItem('accessToken');
-        const requestData = { body: { text: userText, petId } };
+        const requestData = {
+            body: {
+                text: userText,
+                petId
+            }
+        };
 
         if (uploadedFile) {
             const base64File = await toBase64(uploadedFile);
-            requestData.body.file = base64File;
+            requestData.file = base64File;
         }
-
-        const response = await apiClient.post(apiUrl, requestData, {
-            headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }
-        });
-
-        const responseMessage = response.data.result || "응답이 없습니다.";
-        const botMessage = document.createElement("div");
-        botMessage.classList.add("message", "bot");
-        botMessage.innerHTML = `<p>${responseMessage}</p>`;
-        chatMessages.appendChild(botMessage);
+        console.log("요청 데이터:", requestData); // 요청 데이터 확인
+        const response = await apiClient.post(apiUrl, requestData);
+        hideTypingIndicator(typingIndicator); // 로딩 모션 제거
+        addMessage(response.data.result || "응답이 없습니다.", "bot");
     } catch (error) {
-        const botMessage = document.createElement("div");
-        botMessage.classList.add("message", "bot");
-        botMessage.innerHTML = `<p>${error.response?.data?.message || "요청 중 오류가 발생했습니다."}</p>`;
-        chatMessages.appendChild(botMessage);
+        hideTypingIndicator(typingIndicator); // 로딩 모션 제거
+        const errorMessage = error.response?.data?.message || "요청 중 오류가 발생했습니다.";
+        addMessage(`오류: ${errorMessage}`, "bot");
+        console.error("API 요청 실패:", error);
     }
-    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Base64 변환 함수
+// Base64 변환
 function toBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -234,20 +197,19 @@ function toBase64(file) {
     });
 }
 
-// 초기화
+// 페이지 초기화
 function initializePage() {
-    createFeatureButtons(); // 기능 버튼 초기화
-    const submitButton = document.getElementById("sendButton");
-    submitButton.onclick = processUserMessage;
-    console.log("페이지가 초기화되었습니다.");
+    initializeFeatureCards(); // 카드에 이벤트 리스너 추가
+    document.getElementById("sendButton").addEventListener("click", processUserMessage);
+    console.log("페이지 초기화 완료");
 }
 
+// DOM 로드 시 초기화
 document.addEventListener("DOMContentLoaded", () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
         alert("로그인이 필요합니다.");
-        const currentUrl = window.location.href;
-        window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
+        window.location.href = `./user/login.html?redirect=${encodeURIComponent(window.location.href)}`;
         return;
     }
     initializePage();
