@@ -10,50 +10,6 @@ body {
     color: #333;
 }
 
-/* 상단바 */
-header .navbar {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px;
-    background-color: #ffffff;
-}
-
-.navbar .logo {
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    color:black;
-    margin-left: calc((100% - 1216px) / 2); /* 메인 카드와 왼쪽 정렬 */
-}
-/* 방문한 링크 색상을 기본 색상으로 유지 */
-.navbar.logo:visited {
-    color: black; /* 방문 후에도 검정색 유지 */
-}
-
-.navbar nav a {
-    margin: 0 20px;
-    text-decoration: none;
-    color: #000;
-}
-
-.auth-buttons button {
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    margin-left: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.auth-buttons {
-    display: flex;
-    gap: 10px; /* 버튼 사이 간격 추가 */
-}
-/*상단바 끝*/
-
 /* 컨텐츠 영역 */
 .container {
     margin-top: 30px; /* 상단 여백 추가 */
@@ -152,14 +108,14 @@ header .navbar {
 /* 수정/삭제 텍스트 스타일 */
 .action-text {
     font-size: 14px;
-    color: #4caf50;
+    color: #ff7f50;
     cursor: pointer;
     text-decoration: underline;
     margin-right: 15px;
 }
 
 .action-text:hover {
-    color: #45a049;
+    color: #E67347;
     text-decoration: none;
 }
 
@@ -175,7 +131,7 @@ header .navbar {
 }
 
 .comment-form button {
-    background-color: #4caf50;
+    background-color: #ff7f50;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -185,5 +141,5 @@ header .navbar {
 }
 
 .comment-form button:hover {
-    background-color: #45a049;
+    background-color: #E67347;
 }
