@@ -5,29 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>블로그 메인화면</title>
     <link rel="stylesheet" href="./css/boardindex.css">
+    <link rel="stylesheet" href="./css/header.css"> <!--header 영역-->
     <!-- axios CDN 추가 -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
+    <!-- 여기에서 헤더가 삽입됩니다 -->
+    <div id="header-container"></div>
+    
     <div class="container">
-        <!-- 상단바 -->
-        <header>
-            <div class="navbar">
-                <a href="index.html" class="logo">PETLENDAR</a>
-                <nav>
-                    <a href="index.html">Homepage</a>
-                    <a href="boardindex.html">Community</a>
-                    <a href="chatbot.html">Chatbot</a>
-                </nav>
-                <div class="auth-buttons">
-                    <button id="login-btn">로그인</button>
-                    <button id="signup-btn">회원가입</button>
-                    <button id="logout-btn">로그아웃</button>
-                </div>
-            </div>
-        </header>
-
-        <!-- 메인 카드 -->
+    <!-- 메인 카드 -->
         <section class="main-card">
             <div class="main-card-background"></div>
         </section>
@@ -48,13 +35,22 @@
         <!-- 더보기 버튼 -->
         <button id="load-more" class="load-more" style="display: none;">더보기</button>
     </div>
-    
-    <script type="module" src="./js/boardindex.js"></script>
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            document.body.style.zoom = "67%";
-        });
+        // header.html 파일을 동기적으로 로드하여 #header-container에 삽입
+        const request = new XMLHttpRequest();
+        request.open("GET", "./header.html", false);  // false는 동기적 요청
+        request.send(null);
+    
+        if (request.status === 200) {
+            document.getElementById("header-container").innerHTML = request.responseText;
+        } else {
+            console.error("Error loading header:", request.status);
+        }
     </script>
+    
+    <!-- 헤더 관련 JS 파일 추가 -->
+    <script src="./js/header.js"></script>
+    <script type="module" src="./js/boardindex.js"></script>
     <!-- axios CDN 추가 -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
