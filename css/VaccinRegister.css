@@ -39,7 +39,8 @@ nav a {
 .hero-section {
   text-align: center;
   padding: 50px 20px;
-  background-color: #ffdab9; /* 연한 주황색 */
+  margin-bottom: 100px;
+  background-color: #b9deff; /* 연한 주황색 */
 }
 
 .hero-section h1 {
