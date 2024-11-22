@@ -5,14 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>반려동물 상세 정보</title>
   <link rel="stylesheet" href="../css/petDetail.css">
+  <link rel="stylesheet" href="../css/header.css"> <!-- 헤더 영역 스타일 적용 -->
 </head>
+
 <body>
+
+
+  <!-- 여기에서 헤더가 삽입됩니다 -->
+  <div id="header-container"></div>
+
   <div class="container">
-    <h1>반려동물 상세 정보</h1>
+    <h1 id="info">반려동물 상세 정보</h1>
     <div id="pet-detail" class="pet-detail"></div>
     <p id="response-message" class="response-message" style="display: none;"></p>
   </div>
 
   <script src="../js/petDetail.js"></script>
+</body>
+
+<footer class="footer">
+  <p>&copy; 2024 PETLENDAR. All rights reserved.</p>
+</footer>
+
+
+<script>
+// header.html 파일을 동기적으로 로드하여 #header-container에 삽입
+const request = new XMLHttpRequest();
+request.open("GET", "./petheader.html", false);  // false는 동기적 요청
+request.send(null);
+
+if (request.status === 200) {
+    document.getElementById("header-container").innerHTML = request.responseText;
+} else {
+    console.error("Error loading header:", request.status);
+}
+</script>
+
+
+<!-- 헤더 관련 JS 파일 추가 -->
+<script src="../js/header.js"></script>
+<script src="../js/petDetail.js"></script> <!-- petlist.js 추가 -->
 </body>
 </html>
