@@ -5,10 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>반려동물 등록</title>
   <link rel="stylesheet" href="../css/petResistration.css">
+  <link rel="stylesheet" href="../css/header.css"> <!--header 영역-->
+
 </head>
 <body>
+
+
+    <!-- 여기에서 헤더가 삽입됩니다 -->
+    <div id="header-container"></div>
+
   <div class="container">
-    <h1>반려동물 등록</h1>
+    <h1 id="cardh1">반려동물 등록</h1>
     <form id="pet-register-form">
       <div class="input-wrapper">
         <label for="name">이름</label>
@@ -44,10 +51,27 @@
         <input type="file" id="image" accept="image/*">
       </div>
 
-      <button type="submit">반려동물 등록</button>
+      <button id="registerbtn" type="submit">반려동물 등록</button>
       <p id="response-message" style="display: none;"></p>
     </form>
   </div>
+
+
+  <script>
+    // header.html 파일을 동기적으로 로드하여 #header-container에 삽입
+    const request = new XMLHttpRequest();
+    request.open("GET", "./petheader.html", false);  // false는 동기적 요청
+    request.send(null);
+
+    if (request.status === 200) {
+        document.getElementById("header-container").innerHTML = request.responseText;
+    } else {
+        console.error("Error loading header:", request.status);
+    }
+  </script>
+
+  <!-- 헤더 관련 JS 파일 추가 -->
+  <script src="../js/petheader.js"></script>
 
   <script src="../js/petRegistration.js"></script>
 </body>
