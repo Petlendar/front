@@ -59,7 +59,7 @@ body {
 #search-btn, #new-post-btn {
     width: 130px;
     height: 40px;
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -135,7 +135,7 @@ body {
     width: 130px;
     height: 40px;
     margin: 20px auto;
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: #fff;
     border: none;
     cursor: pointer;

@@ -108,14 +108,14 @@ body {
 /* 수정/삭제 텍스트 스타일 */
 .action-text {
     font-size: 14px;
-    color: #ff7f50;
+    color: #6894FF;
     cursor: pointer;
     text-decoration: underline;
     margin-right: 15px;
 }
 
 .action-text:hover {
-    color: #E67347;
+    color: #5182FF;
     text-decoration: none;
 }
 
@@ -131,7 +131,7 @@ body {
 }
 
 .comment-form button {
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -141,5 +141,5 @@ body {
 }
 
 .comment-form button:hover {
-    background-color: #E67347;
+    background-color: #5182FF;
 }

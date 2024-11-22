@@ -47,14 +47,14 @@
 
 /* 액션 버튼 스타일 */
 .action-button {
-    color: #ff7f50;
+    color: #6894FF;
     cursor: pointer;
     text-decoration: underline;
     font-size: 13px;
 }
 
 .action-button:hover {
-    color: #E67347;
+    color: #5182FF;
 }
 
 /* 댓글 입력창 */
@@ -75,7 +75,7 @@
 }
 
 .comment-form button {
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -85,7 +85,7 @@
 }
 
 .comment-form button:hover {
-    background-color: #E67347;
+    background-color: #5182FF;
 }
 
 /* 수정 입력 폼 */
@@ -106,7 +106,7 @@
 }
 
 .edit-comment-form button {
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: white;
     border: none;
     padding: 10px 20px;

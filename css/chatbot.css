@@ -29,7 +29,7 @@ body {
 
 /* 채팅 헤더 */
 .chat-header {
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: #ffffff;
     padding: 10px;
     text-align: center;
@@ -55,7 +55,7 @@ body {
 }
 
 .message.user {
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: #ffffff;
     align-self: flex-end;
     border-bottom-right-radius: 0;
@@ -172,7 +172,7 @@ body {
     padding: 10px 15px;
     margin-left: 10px;
     border: none;
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -181,7 +181,7 @@ body {
 }
 
 .chat-input button:hover {
-    background-color: #FFA07A;
+    background-color: #5182FF;
 }
 
 /* 이미지 미리보기 컨테이너 */
@@ -262,7 +262,7 @@ body {
 /* 버튼 스타일 */
 .feature-button {
     padding: 10px 15px;
-    background-color: #ff7f50;
+    background-color: #6894FF;
     color: white;
     border: none;
     border-radius: 5px;
@@ -271,7 +271,7 @@ body {
 }
 
 .feature-button:hover {
-    background-color: #FFA07A;
+    background-color: #5182FF;
 }
 
 /* 반려동물 카드 컨테이너 */
@@ -341,7 +341,7 @@ body {
 .typing-indicator span {
     width: 8px; /* 점 크기 */
     height: 8px;
-    background-color: #ff7f50; /* 점 색상 */
+    background-color: #6894FF; /* 점 색상 */
     border-radius: 50%; /* 둥근 점 */
     animation: typing-animation 1.5s infinite ease-in-out;
 }
