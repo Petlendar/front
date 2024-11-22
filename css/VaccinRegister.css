@@ -1,58 +1,124 @@
+/* 공통 스타일 */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .container {
-    background-color: #fff;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #6894ff;
-    font-size: 24px;
-  }
-  
-  .input-wrapper {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  select, input[type="date"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  button {
-    background-color: #6894ff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  button:hover {
-    background-color: #5182ff;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; /* 연한 배경색 */
+}
+
+/* 헤더 */
+/* 공통 스타일 */
+body {
+  font-family: 'Work Sans', sans-serif;
+  background-color: #f8f9fa; /* 전체 배경색 */
+  margin: 0;
+  padding: 0;
+}
+
+/* 헤더 스타일 */
+header {
+  background-color: #ffffff; /* 헤더 배경 */
+  border-bottom: 1px solid #e0e0e0; /* 헤더 하단 라인 */
+  padding: 10px 20px;
+}
+
+header h1 .logo-link {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+nav a {
+  text-decoration: none;
+  margin: 0 15px;
+  color: #333;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #ffdab9; /* 연한 주황색 */
+}
+
+.hero-section h1 {
+  font-size: 36px;
+  color: #663300;
+}
+
+.hero-section p {
+  font-size: 18px;
+  color: #4d2800;
+}
+
+/* 등록 폼 */
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form .input-group {
+  margin-bottom: 15px;
+}
+
+.form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form select,
+.form input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.form button {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff8c42;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.form button:hover {
+  background-color: #ff7f50;
+}
+
+/* 푸터 */
+.footer {
+  position: fixed; /* 푸터를 화면의 맨 아래에 고정 */
+  bottom: 0;
+  left: 0;
+  width: 100%; /* 전체 너비를 차지하게 설정 */
+  text-align: center;
+  background-color: #ffffff;
+  padding: 15px;
+  border-top: 1px solid #ddd;
+  color: #777;
+}
+
+body {
+  padding-bottom: 60px; /* 푸터 높이만큼 페이지 하단에 여백 추가 */
+}
+
