@@ -80,7 +80,8 @@ async function loadRegisteredPets() {
 
                 // 이미지 클릭 시 해당 반려동물 상세 페이지로 이동
                 petImage.addEventListener('click', () => {
-                    window.location.href = `./petDetail.html?petId=${pet.petId}`;
+                    window.location.href = `./pet/petDetail.html?petId=${pet.petId}`;
+
                 });
 
                 const petName = document.createElement('h3');
