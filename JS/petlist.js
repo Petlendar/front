@@ -1,57 +1,71 @@
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async () => {
   const petListContainer = document.getElementById('pet-list');
-  const accessToken = localStorage.getItem('accessToken');
+  const registerPetBtn = document.getElementById('register-pet-btn');
 
-  if (!accessToken) {
-    petListContainer.innerHTML = `
-      <div class="login-required">
-        <p>로그인이 필요합니다. 먼저 로그인해 주세요.</p>
-        <button id="login-btn" class="register-btn">로그인</button>
-      </div>
-    `;
-    
-    document.getElementById('login-btn').addEventListener('click', function() {
-      window.location.href = '../user/login.html';
-    });
-    return;
-  }
-
-  try {
-    const response = await fetch('http://114.70.216.57/pet/api/pet', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
-    const data = await response.json();
-
-    if (data.result.resultCode === 200 && Array.isArray(data.body)) {
-      petListContainer.innerHTML = '';
-
-      data.body.forEach(pet => {
-        const petItem = document.createElement('div');
-        petItem.classList.add('pet-item');
-
-        petItem.innerHTML = `
-          <p><strong>이름:</strong> <a href="petDetail.html?petId=${pet.petId}" style="color: #6a1b9a; text-decoration: none;">${pet.name}</a></p>
-          <p><strong>카테고리:</strong> ${pet.category}</p>
-          ${pet.petImage ? `<img src="${pet.petImage.imageUrl}" alt="${pet.name} 이미지" width="150" style="border-radius: 50%;">` : ''}
-          <button onclick="window.location.href='petDetail.html?petId=${pet.petId}'" class="detail-btn">상세보기</button>
-        `;
-        
-        petListContainer.appendChild(petItem);
+  // Fetch and display pet list
+  async function loadPets() {
+    try {
+      const response = await fetch('http://114.70.216.57/pet/api/pet', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'Content-Type': 'application/json',
+        },
       });
-    } else {
-      petListContainer.innerHTML = '<p>반려동물 목록을 불러오는 데 실패했습니다.</p>';
+
+      const data = await response.json();
+
+      if (data.result.resultCode === 200) {
+        displayPets(data.body);
+      } else {
+        petListContainer.innerHTML = '<p>반려동물을 불러오는 데 실패했습니다.</p>';
+      }
+    } catch (error) {
+      console.error('Error fetching pets:', error);
+      petListContainer.innerHTML = '<p>반려동물을 불러오는 중 오류가 발생했습니다.</p>';
     }
-  } catch (error) {
-    console.error('반려동물 목록 조회 중 오류 발생:', error);
-    petListContainer.innerHTML = '<p>오류 발생: 반려동물 목록을 불러올 수 없습니다.</p>';
   }
 
-  document.getElementById('register-pet-btn').addEventListener('click', function() {
-    window.location.href = 'petRegistration.html';
+  // Display pets in cards
+  function displayPets(pets) {
+    petListContainer.innerHTML = ''; // 기존 목록 초기화
+    pets.forEach((pet) => {
+      const petCard = document.createElement('div');
+      petCard.className = 'pet-card';
+
+      const petImage = document.createElement('img');
+      petImage.src = pet.petImage ? pet.petImage.imageUrl : '../images/default-image.webp';
+      petImage.alt = pet.name;
+      petImage.className = 'pet-image';
+
+      const petName = document.createElement('h3');
+      petName.textContent = pet.name;
+
+      const petCategory = document.createElement('p');
+      petCategory.textContent = `카테고리: ${pet.category}`;
+
+      const detailBtn = document.createElement('button');
+      detailBtn.className = 'detail-btn';
+      detailBtn.textContent = '상세보기';
+
+      // 상세보기 버튼 이벤트 리스너
+      detailBtn.addEventListener('click', () => {
+        window.location.href = `./petDetail.html?petId=${pet.petId}`;
+      });
+
+      petCard.appendChild(petImage);
+      petCard.appendChild(petName);
+      petCard.appendChild(petCategory);
+      petCard.appendChild(detailBtn);
+
+      petListContainer.appendChild(petCard);
+    });
+  }
+
+  // Redirect to pet registration page
+  registerPetBtn.addEventListener('click', () => {
+    window.location.href = './PetRegistration.html';
   });
+
+  // Load pets on page load
+  await loadPets();
 });
