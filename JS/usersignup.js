@@ -54,16 +54,20 @@ async function checkDuplication(type, value) {
     body: type === 'email' ? { email: value } : { name: value }
   };
 
+  const accessToken = localStorage.getItem('accessToken'); // accessToken이 localStorage에 저장되어 있다고 가정합니다.
+
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}` // 인증이 필요한 경우 인증 헤더 추가
       },
       body: JSON.stringify(requestBody),
     });
 
     const result = await response.json();
+    console.log("중복 확인 응답 데이터:", result);
 
     if (result && result.result && result.result.resultCode === 200) {
       return true; // 중복되지 않음
@@ -148,6 +152,31 @@ function validatePostalCode() {
   }
 }
 
+// 입력값 유효성 검사
+function validateInputs() {
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+
+  if (!email || !phone) {
+    alert("모든 필드를 입력해 주세요.");
+    return false;
+  }
+
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailPattern.test(email)) {
+    alert("올바른 이메일 형식을 입력해 주세요.");
+    return false;
+  }
+
+  const phonePattern = /^010-\d{4}-\d{4}$/;
+  if (!phonePattern.test(phone)) {
+    alert("휴대폰 번호는 '010-xxxx-xxxx' 형식이어야 합니다.");
+    return false;
+  }
+
+  return true;
+}
+
 // 비밀번호 표시/숨기기 기능
 const togglePasswordButtons = document.querySelectorAll('.toggle-password');
 togglePasswordButtons.forEach((button) => {
@@ -163,7 +192,7 @@ togglePasswordButtons.forEach((button) => {
 document.getElementById('register-form').addEventListener('submit', async function (event) {
   event.preventDefault();
 
-  if (!validatePasswords() || !validateBirthdate() || !validatePostalCode()) {
+  if (!validatePasswords() || !validateBirthdate() || !validatePostalCode() || !validateInputs()) {
     return;
   }
 
@@ -190,6 +219,8 @@ document.getElementById('register-form').addEventListener('submit', async functi
     }
   };
 
+  console.log("회원가입 요청 데이터:", JSON.stringify(userRegistrationRequest));
+
   try {
     const response = await fetch('http://114.70.216.57/user/open-api/user', {
       method: 'POST',
@@ -200,13 +231,19 @@ document.getElementById('register-form').addEventListener('submit', async functi
     });
 
     const data = await response.json();
+    console.log("서버 응답 데이터:", data);
     const responseMessage = document.getElementById('response-message');
-    if (data.result.resultCode === 200) {
+    if (response.ok && data.result.resultCode === 200) {
       alert(data.body.message); // 성공 메시지 출력
       window.location.href = 'login.html'; // 로그인 페이지로 이동
     } else {
       if (responseMessage) {
-        responseMessage.textContent = '회원가입 실패: ' + data.result.resultMessage;
+        let errorMessage = `회원가입 실패: ${data.result.resultMessage}`;
+        if (data.result.resultDescription) {
+          errorMessage += ` (${data.result.resultDescription})`;
+        }
+        responseMessage.textContent = errorMessage;
+        responseMessage.style.display = 'block';
         responseMessage.classList.add('error');
       }
     }
@@ -215,6 +252,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
     const responseMessage = document.getElementById('response-message');
     if (responseMessage) {
       responseMessage.textContent = '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.';
+      responseMessage.style.display = 'block';
       responseMessage.classList.add('error');
     }
   }
