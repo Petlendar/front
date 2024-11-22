@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const petListContainer = document.getElementById('pet-list');
   const registerPetBtn = document.getElementById('register-pet-btn');
 
+
+  // 로그인 여부 확인
+  function checkLogin() {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      window.location.href = '../index.html'; // 로그인 페이지로 리디렉션
+    }
+  }
+
   // Fetch and display pet list
   async function loadPets() {
     try {
@@ -65,6 +74,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   registerPetBtn.addEventListener('click', () => {
     window.location.href = './PetRegistration.html';
   });
+
+  // 로그인 여부 확인
+  checkLogin();
 
   // Load pets on page load
   await loadPets();
