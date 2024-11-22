@@ -20,6 +20,15 @@ section#main-section {
     flex-wrap: wrap; /* 화면 크기에 따라 자동으로 줄 바꿈 */
 }
 
+/* 메인 이미지 스타일 */
+.main-image {
+    width: 100vw;
+    height: auto;
+    max-height: 600px; /* 세로 크기 조정 */
+    object-fit: cover; /* 이미지 비율 유지 */
+}
+
+
 /* 캘린더 영역 스타일 */
 .calendar-area {
     flex: 1;
@@ -29,6 +38,10 @@ section#main-section {
     padding: 20px;
     margin-right: 20px;
     min-width: 400px; /* 최소 크기 설정 */
+    height: 450px; /* 세로 크기 키움 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 내용들이 위아래로 간격 유지 */
 }
 
 /* 캘린더 헤더 */
@@ -55,6 +68,7 @@ button {
     grid-template-columns: repeat(7, 1fr);
     gap: 10px;
     margin-top: 20px;
+    flex-grow: 1; /* 남은 공간을 채움 */
 }
 
 .day {
@@ -83,8 +97,11 @@ button {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     min-width: 280px; /* 최소 크기 설정 */
+    height: 450px; /* 세로 크기 키움 */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 텍스트를 위로 정렬 */
 }
-
 /* 정보 영역 텍스트 */
 #vaccination-info {
     font-size: 18px;
@@ -93,53 +110,6 @@ button {
 }
 
 /* -----------------------------------------------반려동물 목록 영역----------------------------------------------- */
-.pet-area {
-    width: 100%;
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 반려동물 목록을 수평으로 가운데 정렬 */
-    padding: 20px;
-    background-color: #fff; /* 배경색 추가 */
-    border-radius: 8px; /* 테두리 둥글게 */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
-}
-
-.pet-area h3 {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-#pet-list {
-    display: flex;
-    flex-wrap: wrap; /* 여러 줄로 나열되도록 설정 */
-    justify-content: center; /* 아이템을 수평 중앙 정렬 */
-    gap: 50px;
-    width: 100%;
-    max-width: 600px; /* 아이템이 너무 넓어지지 않도록 최대 너비 제한 */
-    margin: 0 auto; /* 전체 목록도 가운데 정렬 */
-}
-
-.pet-wrapper {
-    text-align: center;
-    width: 100px; /* 아이템 크기 제한 */
-    cursor: pointer;
-    transition: transform 0.3s ease; /* 마우스 호버시 애니메이션 추가 */
-}
-
-.pet-wrapper img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: cover; /* 이미지 비율 맞추기 */
-}
-
-.pet-wrapper p {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #333;
-}
 
 /* 반려동물 목록 클릭 시 효과 */
 .pet-wrapper img:hover {
@@ -163,3 +133,60 @@ button {
     margin: 5px 0;              /* 각 항목 간의 간격 */
     padding-left: 20px;         /* 항목에 대한 들여쓰기 */
 }
+
+
+.pet-list-section {
+    padding: 40px;
+    background-color: #fff;
+    text-align: center;
+    flex-grow: 1; /* 남는 공간을 채움 */
+    min-height: calc(100vh - 700px); /* 위 섹션 크기 키우면서 아래 공간 조정 */
+}
+
+.section-title {
+    font-size: 24px;
+    color: black; /* 초록색 */
+    margin-bottom: 20px;
+}
+
+#pet-list {
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 나열되도록 설정 */
+    justify-content: center; /* 아이템을 수평 중앙 정렬 */
+    gap: 50px; /* 간격 조정 */
+    width: 100%;
+    margin: 0 auto; /* 전체 목록도 가운데 정렬 */
+}
+
+.pet-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  /* 반려동물 카드 */
+  .pet-card {
+    width: 200px; /* 카드 너비를 200px로 고정 */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .pet-card img {
+    width: 100%; /* 카드 너비에 맞춤 */
+    height: 150px; /* 이미지 높이 고정 */
+    object-fit: cover; /* 비율 유지하며 카드에 맞춤 */
+  }
+  
+  .pet-card h3 {
+    color: #4d2800; /* 어두운 브라운 */
+    margin: 10px 0;
+  }
+  
+  .pet-card p {
+    color: #805a3b; /* 부드러운 갈색 */
+    margin-bottom: 10px;
+  }

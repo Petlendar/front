@@ -12,8 +12,11 @@
   <!-- 여기에서 헤더가 삽입됩니다 -->
   <div id="header-container"></div>
 
-  <img src="./images/m-post-card2.png" style="width: 100vw; height: auto;">
-  
+  <video class="main-image" autoplay loop muted playsinline>
+    <source src="../images/pet.mp4" type="video/mp4">
+    브라우저가 비디오 태그를 지원하지 않습니다.
+  </video>
+    
   <section id="main-section">
     <div class="main-content">
       <!-- 캘린더 영역 -->
@@ -31,13 +34,12 @@
         <p id="vaccination-info">선택된 날짜에 대한 정보가 여기에 표시됩니다.</p>
       </div>
     </div>
-
-    <!-- 반려동물 선택 영역: 캘린더 아래로 배치 -->
-    <div class="pet-area">
-      <h3>내 반려동물 보기</h3>
-      <div id="pet-list">
-        <!-- 반려동물 이미지가 여기에 로드됩니다 -->
-      </div>
+  </section>
+  <!-- 반려동물 목록 영역 -->
+  <section class="pet-list-section">
+    <h2 class="section-title">우리 가족의 반려동물을 만나보세요</h2>
+    <div id="pet-list" class="pet-list">
+      <!-- JavaScript로 반려동물 카드가 추가될 예정 -->
     </div>
   </section>
 
@@ -56,6 +58,7 @@
 
   <!-- 헤더 관련 JS 파일 추가 -->
   <script src="./js/header.js"></script>
+  <script src="./js/petList.js"></script> <!-- petlist.js 추가 -->
   <script type="module" src="./js/Calendar.js"></script>
   <script src="./js/main.js"></script>
 </body>

@@ -50,115 +50,131 @@ document.addEventListener('DOMContentLoaded', async function () {
       pets = await loadRegisteredPets();
   } 
   
-  // 반려동물 이미지 로드 함수
-  async function loadRegisteredPets() {
-      try {
-          const response = await fetch('http://114.70.216.57/pet/api/pet', {
-              method: 'GET',
-              headers: {
-                  'Authorization': `Bearer ${accessToken}`,
-                  'Content-Type': 'application/json',
-              },
-          });
+// 반려동물 이미지 로드 함수
+async function loadRegisteredPets() {
+    try {
+        const response = await fetch('http://114.70.216.57/pet/api/pet', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        });
 
-          const data = await response.json();
+        const data = await response.json();
 
-          if (data.result.resultCode === 200 && Array.isArray(data.body)) {
-              petListContainer.innerHTML = '';
-              const petList = data.body;
+        if (data.result.resultCode === 200 && Array.isArray(data.body)) {
+            petListContainer.innerHTML = ''; // 기존 목록 초기화
+            const petList = data.body;
 
-              petList.forEach(pet => {
-                  const petWrapper = document.createElement('div');
-                  petWrapper.classList.add('pet-wrapper');
+            petList.forEach(pet => {
+                // 카드 스타일로 반려동물 표시
+                const petCard = document.createElement('div');
+                petCard.classList.add('pet-card');
 
-                  const petImage = document.createElement('img');
-                  petImage.src = pet.petImage ? pet.petImage.imageUrl : './images/default-image.webp';
-                  petImage.alt = pet.name;
-                  petImage.width = 80;
-                  petImage.style.borderRadius = '50%';
-                  petImage.style.cursor = 'pointer';
-                  petImage.title = pet.name;
+                const petImage = document.createElement('img');
+                petImage.src = pet.petImage ? pet.petImage.imageUrl : './images/default-image.webp';
+                petImage.alt = pet.name;
+                petImage.className = 'pet-image';
+                petImage.style.cursor = 'pointer';
 
-                  petWrapper.appendChild(petImage);
+                // 이미지 클릭 시 해당 반려동물 상세 페이지로 이동
+                petImage.addEventListener('click', () => {
+                    window.location.href = `./petDetail.html?petId=${pet.petId}`;
+                });
 
-                  const petName = document.createElement('p');
-                  petName.textContent = pet.name;
-                  petWrapper.appendChild(petName);
+                const petName = document.createElement('h3');
+                petName.textContent = pet.name;
 
-                  petListContainer.appendChild(petWrapper);
-              });
+                const petCategory = document.createElement('p');
+                petCategory.textContent = `카테고리: ${pet.category}`;
 
-              return petList;
-          } else {
-              petListContainer.innerHTML = '<p>반려동물 목록을 불러오는 데 실패했습니다.</p>';
-              return [];
-          }
-      } catch (error) {
-          console.error('반려동물 목록 오류:', error);
-          petListContainer.innerHTML = '<p>반려동물 목록을 불러올 수 없습니다.</p>';
-          return [];
-      }
-  }
+                petCard.appendChild(petImage);
+                petCard.appendChild(petName);
+                petCard.appendChild(petCategory);
+
+                petListContainer.appendChild(petCard);
+            });
+
+            return petList;
+        } else {
+            petListContainer.innerHTML = '<p>반려동물 목록을 불러오는 데 실패했습니다.</p>';
+            return [];
+        }
+    } catch (error) {
+        console.error('반려동물 목록 오류:', error);
+        petListContainer.innerHTML = '<p>반려동물 목록을 불러올 수 없습니다.</p>';
+        return [];
+    }
+}
 
   // 캘린더 생성 함수
   async function createCalendar(year, month) {
-      const calendarDays = document.getElementById('calendar-days');
-      const calendarHeader = document.querySelector('#calendar-header h2');
-      calendarDays.innerHTML = '';
-      calendarHeader.textContent = `${year}년 ${month + 1}월`;
+    const calendarDays = document.getElementById('calendar-days');
+    const calendarHeader = document.querySelector('#calendar-header h2');
+    calendarDays.innerHTML = '';
+    calendarHeader.textContent = `${year}년 ${month + 1}월`;
 
-      const firstDay = new Date(year, month, 1).getDay();
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-      const vaccinationData = await fetchVaccinationData(year, month + 1);
+    const vaccinationData = await fetchVaccinationData(year, month + 1);
+    
 
-      for (let i = 0; i < firstDay; i++) {
-          const emptyCell = document.createElement('div');
-          emptyCell.classList.add('empty');
-          calendarDays.appendChild(emptyCell);
-      }
+    for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.classList.add('empty');
+        calendarDays.appendChild(emptyCell);
+    }
 
-      for (let day = 1; day <= daysInMonth; day++) {
-          const dayCell = document.createElement('div');
-          dayCell.classList.add('day');
-          dayCell.textContent = day;
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayCell = document.createElement('div');
+        dayCell.classList.add('day');
+        dayCell.textContent = day;
 
-          const dayEvents = vaccinationData.filter(record => record.day === day);
+        const dayEvents = vaccinationData.filter(record => record.day === day);
+        const birthdayEvent = dayEvents.find(event => event.vaccinationType === 'BIRTHDAY');
+        if (birthdayEvent) {
+            const birthdayLabel = document.createElement('div');
+            birthdayLabel.textContent = '생일';
+            birthdayLabel.style.color = 'red'; // 생일 텍스트를 빨간색으로 표시
+            birthdayLabel.style.fontWeight = 'bold';
+            dayCell.appendChild(birthdayLabel);
+        }
 
-          if (dayEvents.length > 0) {
-              dayCell.classList.add('highlight');
-              dayCell.addEventListener('click', () => showDayEvents(day, dayEvents));
-          }
+        if (dayEvents.length > 0) {
+            dayCell.classList.add('highlight');
+            dayCell.addEventListener('click', () => showDayEvents(day, dayEvents));
+        }
 
-          calendarDays.appendChild(dayCell);
-      }
-  }
+        calendarDays.appendChild(dayCell);
+    }
+}
 
   // 접종 데이터 가져오기 함수
   async function fetchVaccinationData(year, month) {
-      try {
-          const response = await fetch(`http://114.70.216.57/pet/api/calendar/${year}/${month}`, {
-              method: 'GET',
-              headers: {
-                  'Authorization': `Bearer ${accessToken}`,
-                  'Content-Type': 'application/json',
-              },
-          });
+    try {
+        const response = await fetch(`http://114.70.216.57/pet/api/calendar/${year}/${month}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+        });
 
-          const data = await response.json();
+        const data = await response.json();
 
-          if (data.result.resultCode === 200 && Array.isArray(data.body)) {
-              return data.body;
-          } else {
-              console.error('접종 데이터 로드 실패:', data);
-              return [];
-          }
-      } catch (error) {
-          console.error('접종 데이터 오류:', error);
-          return [];
-      }
-  }
-
+        if (data.result.resultCode === 200 && Array.isArray(data.body)) {
+            return data.body;
+        } else {
+            console.error('접종 데이터 로드 실패:', data);
+            return [];
+        }
+    } catch (error) {
+        console.error('접종 데이터 오류:', error);
+        return [];
+    }
+}
   async function showDayEvents(day, events) {
       const infoArea = document.getElementById('vaccination-info');
       
