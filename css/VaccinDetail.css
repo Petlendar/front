@@ -111,7 +111,7 @@ body {
 
 .pet-list .pet-card button {
   margin-top: 20px;
-  background-color: #ff7f50;
+  background-color: #5182ff;
   color: #fff;
   border: none;
   padding: 12px 30px; /* 버튼 크기 확대 */
@@ -121,7 +121,7 @@ body {
 }
 
 .pet-list .pet-card button:hover {
-  background-color: #ff7f50;
+  background-color: #5182ff;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -155,7 +155,7 @@ body {
 
 /* 버튼 스타일 - 삭제 버튼 */
 .vaccination-list button {
-  background-color: #ff7f50;
+  background-color: #5182ff;
   color: white;
   border: none;
   padding: 10px 15px;
@@ -165,7 +165,7 @@ body {
 }
 
 .vaccination-list button:hover {
-  background-color: #e55a5a;
+  background-color: #5182ff;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

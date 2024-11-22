@@ -124,7 +124,7 @@ nav a {
 
 /* 등록 버튼 */
 .register-btn {
-  background-color: #ff7f50;
+  background-color: #5182ff;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -135,7 +135,7 @@ nav a {
 }
 
 .register-btn:hover {
-  background-color: #ff5722;
+  background-color: #5182ff;
 }
 
 /* 푸터 */
