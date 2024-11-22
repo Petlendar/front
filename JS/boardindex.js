@@ -15,19 +15,6 @@ const startDate = "2024-11-08T16:48:49"; // 고정된 startDate
 let endDate = getFormattedDate(); // 페이지 로드 시점의 endDate를 형식에 맞게 설정
 let allPosts = []; // 전체 게시글을 저장할 배열
 
-// 로그인 상태 확인 함수
-function checkLoginStatus() {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-        loginButton.style.display = 'none';
-        signupButton.style.display = 'none';
-        logoutButton.style.display = 'block'; // 로그아웃 버튼 표시
-    } else {
-        loginButton.style.display = 'block';
-        signupButton.style.display = 'block';
-        logoutButton.style.display = 'none'; // 로그아웃 버튼 숨김
-    }
-}
 
 // 날짜 포맷 함수
 function getFormattedDate() {
@@ -38,26 +25,6 @@ function getFormattedDate() {
 
 // 초기 게시글 로드
 window.addEventListener('DOMContentLoaded', loadAllPosts);
-window.addEventListener('DOMContentLoaded', checkLoginStatus);
-
-// 로그인 버튼 클릭 이벤트
-loginButton.addEventListener('click', () => {
-    const currentUrl = window.location.href;
-    window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
-});
-
-// 회원가입 버튼 클릭 이벤트
-signupButton.addEventListener('click', () => {
-    window.location.href = './user/signup.html';
-});
-
-// 로그아웃 버튼 클릭 이벤트
-logoutButton.addEventListener('click', () => {
-    localStorage.removeItem('accessToken'); // 토큰 삭제
-    alert('로그아웃 되었습니다.');
-    const currentUrl = window.location.href;
-    window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
-});
 
 // 더보기 버튼 클릭 이벤트
 loadMoreButton.addEventListener('click', () => {
