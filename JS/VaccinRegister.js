@@ -91,7 +91,7 @@ vaccinationForm.addEventListener('submit', async function (event) {
             return;
         }
 
-        if (data.result && data.result.resultCode === 0) {
+        if (data.result && data.result.resultCode === 200) {
             responseMessage.textContent = '예방접종 정보가 성공적으로 등록되었습니다!';
             responseMessage.style.color = 'green';
         } else {
