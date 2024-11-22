@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (data.result.resultCode === 200) {
         displayPets(data.body);
       } else {
-        petListContainer.innerHTML = '<p>반려동물을 불러오는 데 실패했습니다.</p>';
+        petListContainer.innerHTML = '<p>소중한 가족을 등록해주세요!.</p>';
       }
     } catch (error) {
       console.error('Error fetching pets:', error);
