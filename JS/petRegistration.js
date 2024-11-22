@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const accessToken = localStorage.getItem('accessToken');
 
+    console.log("yokrnds", accessToken);
+    console.log("category", category);
+    console.log("weight", weight);
+
     if (!accessToken) {
       document.getElementById('response-message').textContent = '로그인이 필요합니다. 먼저 로그인해 주세요.';
       document.getElementById('response-message').style.display = 'block';

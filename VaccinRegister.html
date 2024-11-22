@@ -1,23 +1,35 @@
+<!-- 예방접종 정보 상세보기 페이지 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>예방접종 등록</title>
+  <title>예방접종 정보 상세보기</title>
   <link rel="stylesheet" href="./css/VaccinRegister.css">
+  <link rel="stylesheet" href="./css/header.css"> <!--header 영역-->
+
 </head>
 <body>
+
+  <!-- 여기에서 헤더가 삽입됩니다 -->
+  <div id="header-container"></div>
+
+  <section class="hero-section">
+    <h1>반려동물의 건강을 위한 예방접종 관리</h1>
+    <p>예방접종 기록을 관리하고 반려동물의 건강을 지키세요.</p>
+  </section>
+
+  <!-- 예방접종 등록 폼 -->
   <div class="container">
-    <h1>예방접종 등록</h1>
-    <form id="vaccination-form">
-      <div class="input-wrapper">
+    <h1 class="title">예방접종 등록</h1>
+    <form id="vaccination-form" class="form">
+      <div class="input-group">
         <label for="pet-select">반려동물 선택:</label>
         <select id="pet-select" required>
           <option value="">반려동물을 선택하세요</option>
-          <!-- 등록된 반려동물이 로드됩니다 -->
         </select>
       </div>
-      <div class="input-wrapper">
+      <div class="input-group">
         <label for="type">예방접종 유형:</label>
         <select id="type" required>
           <option value="DHIPPL">혼합예방주사</option>
@@ -26,15 +38,37 @@
           <option value="RABIES">광견병</option>
         </select>
       </div>
-      <div class="input-wrapper">
+      <div class="input-group">
         <label for="date">접종 날짜:</label>
         <input type="date" id="date" required>
       </div>
-      <button type="submit">등록</button>
-      <p id="response-message" style="display: none;"></p>
+      <button type="submit" class="submit-btn">등록</button>
+      <p id="response-message" class="response-message"></p>
     </form>
   </div>
 
-  <script src="./js/VaccinRegister.js"></script>
+  <!-- 푸터 -->
+  <footer class="footer">
+    <p>&copy; 2024 PETLENDAR. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // header.html 파일을 동기적으로 로드하여 #header-container에 삽입
+    const request = new XMLHttpRequest();
+    request.open("GET", "./header.html", false);  // false는 동기적 요청
+    request.send(null);
+
+    if (request.status === 200) {
+        document.getElementById("header-container").innerHTML = request.responseText;
+    } else {
+        console.error("Error loading header:", request.status);
+    }
+  </script>
+
+  <!-- JS 파일 추가 -->
+  <script src="./js/header.js"></script>
+  <script src="../js/petList.js"></script>
+  <script src="../js/VaccinRegister.js"></script>
 </body>
 </html>
+
