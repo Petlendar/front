@@ -14,23 +14,13 @@ async function checkLoginStatus() {
     const token = localStorage.getItem('accessToken');
 
     if (token) {
-        loginButton.style.display = 'none';
-        signupButton.style.display = 'none';
-
         // 로그인된 사용자 정보 로드
         await loadUserInfo();
     } else {
-        loginButton.style.display = 'block';
-        signupButton.style.display = 'block';
         currentUserId = null; // 초기화
     }
 }
-// 로그아웃 버튼 클릭 이벤트
-logoutButton.addEventListener('click', () => {
-    localStorage.removeItem('accessToken'); // 토큰 삭제
-    alert('로그아웃 되었습니다.');
-    window.location.href = './index.html'; // 리다이렉션 경로 설정
-});
+
 // 로그인된 사용자 정보 로드
 async function loadUserInfo() {
     try {
