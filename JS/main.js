@@ -11,7 +11,7 @@ const doseTypes = {
   REINFORCEMENT: "보강접종",
   INITIAL: "기초접종",
   BOOSTER: "추가접종",
-  BIRTHDAT: "생일"
+  BIRTHDAY: "생일"
 };
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -175,48 +175,58 @@ async function loadRegisteredPets() {
         return [];
     }
 }
-  async function showDayEvents(day, events) {
-      const infoArea = document.getElementById('vaccination-info');
-      
-      // info-area의 기존 내용을 지우고 새로 작성
-      infoArea.innerHTML = ''; 
-      
-      // 해당 날짜의 제목
-      const title = document.createElement('h3');
-      title.textContent = `${day}일의 예방접종 정보`;
-      infoArea.appendChild(title);
-  
-      // 이벤트가 있는 경우에만 처리
-      if (events.length > 0) {
-          events.forEach(event => {
-              const pet = pets.find(p => p.petId === event.petId);
-  
-              // 각 이벤트에 대한 정보를 블록 형태로 추가
-              const eventBlock = document.createElement('div');
-              eventBlock.classList.add('event-block'); // 스타일을 위한 클래스 추가
-  
-              const petName = document.createElement('p');
-              petName.textContent = `반려동물: ${pet ? pet.name : '알 수 없음'}`;
-  
-              const vaccinationType = document.createElement('p');
-              vaccinationType.textContent = `유형: ${vaccinationTypes[event.vaccinationType] || event.vaccinationType}`;
-  
-              const doseType = document.createElement('p');
-              doseType.textContent = `접종 종류: ${doseTypes[event.doseType] || event.doseType}`;
-  
-              // 각 항목을 블록에 추가
-              eventBlock.appendChild(petName);
-              eventBlock.appendChild(vaccinationType);
-              eventBlock.appendChild(doseType);
-  
-              // 전체 eventBlock을 infoArea에 추가
-              infoArea.appendChild(eventBlock);
-          });
-      } else {
-          // 해당 날짜에 이벤트가 없으면 텍스트 추가
-          const noEventsText = document.createElement('p');
-          noEventsText.textContent = '해당 날짜에 예방접종 정보가 없습니다.';
-          infoArea.appendChild(noEventsText);
-      }
-  }
+async function showDayEvents(day, events) {
+    const infoArea = document.getElementById('vaccination-info');
+
+    // info-area의 기존 내용을 지우고 새로 작성
+    infoArea.innerHTML = '';
+
+    // 해당 날짜의 제목
+    const title = document.createElement('h3');
+    title.textContent = `${day}일의 예방접종 정보`;
+    infoArea.appendChild(title);
+
+    // 이벤트가 있는 경우에만 처리
+    if (events.length > 0) {
+        events.forEach(event => {
+            const pet = pets.find(p => p.petId === event.petId);
+
+            // 각 이벤트에 대한 정보를 블록 형태로 추가
+            const eventBlock = document.createElement('div');
+            eventBlock.classList.add('event-block'); // 스타일을 위한 클래스 추가
+
+            const petName = document.createElement('p');
+            petName.textContent = `반려동물: ${pet ? pet.name : '알 수 없음'}`;
+
+            const vaccinationType = document.createElement('p');
+
+            // 예방접종 유형이 null인지 확인
+            if (event.vaccinationType) {
+                vaccinationType.textContent = `유형: ${vaccinationTypes[event.vaccinationType] || event.vaccinationType}`;
+            } else {
+                vaccinationType.textContent = "반려동물의 생일을 축하해 주세요!";
+            }
+
+            // 접종 종류가 생일이 아닌 경우만 추가
+            if (event.doseType && doseTypes[event.doseType] !== "생일") {
+                const doseType = document.createElement('p');
+                doseType.textContent = `접종 종류: ${doseTypes[event.doseType] || event.doseType}`;
+                eventBlock.appendChild(doseType); // 필요한 경우에만 추가
+            }
+
+            // 각 항목을 블록에 추가
+            eventBlock.appendChild(petName);
+            eventBlock.appendChild(vaccinationType);
+
+            // 전체 eventBlock을 infoArea에 추가
+            infoArea.appendChild(eventBlock);
+        });
+    } else {
+        // 해당 날짜에 이벤트가 없으면 텍스트 추가
+        const noEventsText = document.createElement('p');
+        noEventsText.textContent = '해당 날짜에 예방접종 정보가 없습니다.';
+        infoArea.appendChild(noEventsText);
+    }
+}
+
 });
