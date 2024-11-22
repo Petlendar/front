@@ -1,8 +1,13 @@
-/* 기본 스타일 설정 */
+/* CSS Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-size: 16px; /* 글꼴 크기 기본값 */
 }
 
 body {
@@ -11,14 +16,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 /* 컨테이너 스타일 */
 .container {
   max-width: 800px;
-  height: 65vh;
-  width: 70vw;
+  width: 600px;
+  height: 650px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -28,7 +32,7 @@ body {
 
 /* 제목 스타일 */
 #info {
-  font-size: 24px;
+  font-size: 1.5rem;
   color: #333;
   margin-bottom: 20px;
   padding: 10px;
@@ -38,7 +42,7 @@ body {
 
 /* 상세 정보 텍스트 스타일 */
 .pet-detail p {
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #555;
   margin-bottom: 10px;
 }
@@ -57,7 +61,7 @@ body {
 /* 버튼 스타일 */
 #modify-btn, #delete-btn {
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 1rem;
   color: white;
   background-color: #6894FF;
   border: none;
@@ -74,18 +78,30 @@ body {
 
 .response-message {
   margin-top: 20px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
-
 .footer {
-  position: fixed; /* 푸터를 화면의 맨 아래에 고정 */
+  position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%; /* 전체 너비를 차지하게 설정 */
+  width: 100%;
   text-align: center;
   background-color: #ffffff;
   padding: 15px;
   border-top: 1px solid #ddd;
   color: #777;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    height: auto;
+  }
+
+  #pet-detail img {
+    width: 200px;
+    height: 200px;
+  }
 }
