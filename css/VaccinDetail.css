@@ -1,63 +1,182 @@
+/* 기본 스타일 */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .container {
-    background-color: #fff;
-    padding: 20px 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    width: 100%;
-  }
-  
-  h1 {
-    text-align: center;
-    color: #6894ff;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .vaccination-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .vaccination-list li {
-    padding: 10px;
-    background-color: #f1dfc3;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .vaccination-list li span {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  button {
-    background-color: #6894ff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 15px;
-  }
-  
-  button:hover {
-    background-color: #5182ff;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 헤더 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header h1 {
+  display: flex;
+  align-items: center;
+}
+
+.header .logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.header .site-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.header nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+.header nav a:hover {
+  text-decoration: underline;
+}
+
+/* 메인 컨테이너 */
+/* 메인 컨테이너 */
+.main-container {
+  margin: 40px auto;
+  padding: 30px;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+/* 반려동물 목록 섹션 */
+.pet-list-section {
+  padding: 40px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pet-list-section h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.pet-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 카드의 최소 너비를 더 키움 */
+  gap: 40px; /* 카드 간격 확대 */
+  justify-items: center;
+  padding: 20px;
+}
+
+/* 반려동물 카드 */
+.pet-list .pet-card {
+  width: 100%;
+  max-width: 350px; /* 카드의 최대 너비 확대 */
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 25px; /* 카드 내부 여백 확대 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pet-list .pet-card img {
+  width: 100%;
+  height: 220px; /* 이미지 높이 확대 */
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 20px; /* 이미지와 텍스트 간격 확대 */
+}
+
+.pet-list .pet-card h3 {
+  font-size: 24px; /* 텍스트 크기 확대 */
+  margin: 15px 0;
+  color: #333;
+  font-weight: bold;
+}
+
+.pet-list .pet-card button {
+  margin-top: 20px;
+  background-color: #ff7f50;
+  color: #fff;
+  border: none;
+  padding: 12px 30px; /* 버튼 크기 확대 */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.pet-list .pet-card button:hover {
+  background-color: #ff7f50;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 예방접종 상세 정보 섹션 */
+.vaccination-detail-section {
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px; /* 고정된 너비 설정 */
+  min-height: 500px; /* 최소 높이 설정 */
+}
+
+
+.vaccination-detail-section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.vaccination-list {
+  text-align: left;
+  padding: 20px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* 버튼 스타일 - 삭제 버튼 */
+.vaccination-list button {
+  background-color: #ff7f50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.vaccination-list button:hover {
+  background-color: #e55a5a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 푸터 스타일 */
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #fff;
+  border-top: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #333;
+}

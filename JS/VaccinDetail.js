@@ -27,16 +27,29 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
 
       const petData = await petResponse.json();
-      console.log(petData)
+      console.log(petData);
       if (petData.result && petData.result.resultCode === 200 && petData.body.length > 0) {
-          petListDiv.innerHTML = '<h2>펫 목록</h2>';
           petData.body.forEach(pet => {
-              const petButton = document.createElement('button');
-              petButton.textContent = pet.name;
-              petButton.classList.add('pet-button');
-              petButton.addEventListener('click', () => loadVaccinationDetails(pet.petId));
-              petListDiv.appendChild(petButton);
+              const petCard = document.createElement('div');
+              petCard.classList.add('pet-card');
+              petCard.innerHTML = `
+                  <img src="${pet.petImage ? pet.petImage.imageUrl : './images/default-image.webp'}" alt="${pet.name}" class="pet-image">
+                  <h3>${pet.name}</h3>
+                  <p class="pet-category">카테고리: ${pet.category}</p>
+                  <button class="view-vaccination-btn" data-pet-id="${pet.petId}">예방접종 정보 보기</button>
+              `;
+              petListDiv.appendChild(petCard);
           });
+
+          // 이벤트 리스너 추가 - 예방접종 정보 보기 버튼 클릭 시
+          const viewVaccinationBtns = document.querySelectorAll('.view-vaccination-btn');
+          viewVaccinationBtns.forEach(btn => {
+              btn.addEventListener('click', (event) => {
+                  const petId = event.target.getAttribute('data-pet-id');
+                  loadVaccinationDetails(petId);
+              });
+          });
+
       } else {
           petListDiv.innerHTML = '<p>등록된 펫이 없습니다.</p>';
       }
@@ -46,15 +59,16 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   async function loadVaccinationDetails(petId) {
-      vaccinationListDiv.innerHTML = '<p>예방접종 정보를 불러오는 중...</p>';
-      console.log("petId 출력 : ", petId);
-      try {
-          const vaccinationResponse = await fetch(`${apiUrl}/vaccination/${petId}`, {
-              method: 'GET',
-              headers: {
-                  'Authorization': `Bearer ${accessToken}`,
-                  'Content-Type': 'application/json',
-              },
+    vaccinationListDiv.innerHTML = '<p>예방접종 정보를 불러오는 중...</p>';
+    vaccinationListDiv.style.display = 'block'; 
+    console.log("petId 출력 : ", petId);
+    try {
+        const vaccinationResponse = await fetch(`${apiUrl}/vaccination/${petId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
           });
 
           if (!vaccinationResponse.ok) {

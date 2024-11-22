@@ -1,3 +1,4 @@
+<!-- 예방접종 정보 상세보기 페이지 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,19 +6,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>예방접종 정보 상세보기</title>
   <link rel="stylesheet" href="./css/VaccinDetail.css">
+  <link rel="stylesheet" href="./css/header.css"> <!--header 영역-->
+
 </head>
 <body>
-  <div class="container">
-    <h1>예방접종 정보</h1>
-    <!-- 펫 목록 영역 -->
-    <div id="pet-list">
-      <p>펫 목록을 불러오는 중...</p>
-    </div>
-    <!-- 상세 정보 출력 영역 -->
-    <div id="vaccination-list">
-      <p>펫을 선택하면 예방접종 정보가 표시됩니다.</p>
-    </div>
-  </div>
-  <script src="./js/VaccinDetail.js"></script>
+
+  <!-- 여기에서 헤더가 삽입됩니다 -->
+  <div id="header-container"></div>
+
+
+  <!-- 메인 컨테이너 -->
+  <main class="main-container">
+    <!-- 반려동물 목록 섹션 -->
+    <section class="pet-list-section">
+      <h2>반려동물 목록</h2>
+      <div id="pet-list" class="pet-list">
+        <!-- 반려동물 카드들이 동적으로 추가됩니다 -->
+      </div>
+    </section>
+
+    <!-- 예방접종 상세 정보 섹션 -->
+    <section class="vaccination-detail-section">
+      <h2>예방접종 상세 정보</h2>
+      <div id="vaccination-list" class="vaccination-list">
+        <p>펫을 선택하면 예방접종 정보가 표시됩니다.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 PETLENDAR. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // header.html 파일을 동기적으로 로드하여 #header-container에 삽입
+    const request = new XMLHttpRequest();
+    request.open("GET", "./header.html", false);  // false는 동기적 요청
+    request.send(null);
+
+    if (request.status === 200) {
+        document.getElementById("header-container").innerHTML = request.responseText;
+    } else {
+        console.error("Error loading header:", request.status);
+    }
+  </script>
+
+  <!-- JS 파일 추가 -->
+  <script src="./js/header.js"></script>
+  <script src="../js/petList.js"></script>
+  <script src="../js/VaccinDetail.js"></script>
 </body>
 </html>
