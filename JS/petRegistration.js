@@ -96,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('petIds', JSON.stringify(petIds));
 
         responseMessage.textContent = '반려동물이 성공적으로 등록되었습니다!';
+        alert('반려동물이 성공적으로 등록되었습니다.');
+        window.location.href = './petlist.html';
         responseMessage.style.color = 'green';
         responseMessage.style.display = 'block';
       } else {
