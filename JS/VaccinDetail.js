@@ -1,3 +1,19 @@
+// 예방접종 유형 매핑 객체
+const vaccinationTypes = {
+    RABIES: "광견병",
+    DHIPPL: "혼합예방주사",
+    CORONAVIRUS: "코로나 바이러스성 장염",
+    KENNEL_COUGH: "기관, 기관지염"
+  };
+  
+  // 접종 종류 매핑 객체
+  const doseTypes = {
+    REINFORCEMENT: "보강접종",
+    INITIAL: "기초접종",
+    BOOSTER: "추가접종",
+    BIRTHDAT: "생일"
+  };
+  
 document.addEventListener('DOMContentLoaded', async function () {
   const accessToken = localStorage.getItem('accessToken');
   const petListDiv = document.getElementById('pet-list');
@@ -79,23 +95,28 @@ document.addEventListener('DOMContentLoaded', async function () {
           const vaccinationData = await vaccinationResponse.json();
           console.log("dasdfasdf", vaccinationData);
           if (vaccinationData.result && vaccinationData.result.resultCode === 200 && vaccinationData.body.length > 0) {
-              vaccinationListDiv.innerHTML = '<h2>예방접종 정보</h2>';
-              vaccinationData.body.forEach(record => {
-                  const recordDiv = document.createElement('div');
-                  recordDiv.classList.add('record');
-                  recordDiv.innerHTML = `
-                      <p><strong>접종 유형:</strong> ${record.type}</p>
-                      <p><strong>접종 날짜:</strong> ${new Date(record.date).toLocaleDateString()}</p>
-                      <p><strong>등록 일자:</strong> ${new Date(record.registeredAt).toLocaleDateString()}</p>
-                      <button class="delete-button" data-id="${record.vaccinationRecordId}">삭제</button>
-                  `;
-                  vaccinationListDiv.appendChild(recordDiv);
-
-                  recordDiv.querySelector('.delete-button').addEventListener('click', (event) => {
-                      const id = event.target.getAttribute('data-id'); // 버튼의 data-id 속성 값 가져오기
-                      deleteVaccination(id);
-                  });
-              });
+            vaccinationListDiv.innerHTML = '<h2>예방접종 정보</h2>';
+            vaccinationData.body.forEach(record => {
+                const recordDiv = document.createElement('div');
+                recordDiv.classList.add('record');
+                
+                // 접종 유형 한글 매핑
+                const vaccinationTypeInKorean = vaccinationTypes[record.type] || record.type;
+            
+                recordDiv.innerHTML = `
+                    <p><strong>접종 유형:</strong> ${vaccinationTypeInKorean}</p>
+                    <p><strong>접종 날짜:</strong> ${new Date(record.date).toLocaleDateString()}</p>
+                    <p><strong>등록 일자:</strong> ${new Date(record.registeredAt).toLocaleDateString()}</p>
+                    <button class="delete-button" data-id="${record.vaccinationRecordId}"></button>
+                `;
+                vaccinationListDiv.appendChild(recordDiv);
+            
+                // 삭제 버튼 이벤트 리스너 추가
+                recordDiv.querySelector('.delete-button').addEventListener('click', (event) => {
+                    const id = event.target.getAttribute('data-id'); // 버튼의 data-id 속성 값 가져오기
+                    deleteVaccination(id);
+                });
+            });
           } else {
               vaccinationListDiv.innerHTML = '<p>등록된 예방접종 정보가 없습니다.</p>';
           }
