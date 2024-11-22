@@ -49,7 +49,7 @@ async function loadComments() {
                 commentElement.innerHTML = `
                     <p>${comment.content}</p>
                     <div class="comment-meta">
-                        작성자: ${comment.userId} · ${new Date(comment.registeredAt).toLocaleDateString()}
+                        작성자: ${comment.name} · ${new Date(comment.registeredAt).toLocaleDateString()}
                     </div>
                 `;
 

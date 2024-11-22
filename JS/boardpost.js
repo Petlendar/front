@@ -44,7 +44,7 @@ async function loadPostDetail() {
         // 게시글 정보 표시
         document.getElementById('post-title').textContent = post.title;
         document.getElementById('post-category').textContent = `카테고리: ${post.category}`;
-        document.getElementById('post-user').textContent = `작성자: ${post.userId}`;
+        document.getElementById('post-user').textContent = `작성자: ${post.name}`;
         document.getElementById('post-date').textContent = `등록일: ${new Date(post.registeredAt).toLocaleDateString()}`;
 
         const postContentContainer = document.getElementById('post-content');
