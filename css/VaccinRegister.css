@@ -93,7 +93,7 @@ nav a {
 .form button {
   width: 100%;
   padding: 15px;
-  background-color: #ff8c42;
+  background-color: #5182ff;
   color: white;
   border: none;
   border-radius: 5px;
@@ -102,7 +102,7 @@ nav a {
 }
 
 .form button:hover {
-  background-color: #ff7f50;
+  background-color: #5182ff;
 }
 
 /* 푸터 */
