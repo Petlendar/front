@@ -68,11 +68,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
     }
+    // 문자열의 바이트 길이를 계산하는 함수
+    function getByteLength(text) {
+        let byteLength = 0;
+        for (let i = 0; i < text.length; i++) {
+            const charCode = text.charCodeAt(i);
+            if (charCode <= 0x7f) {
+                byteLength += 1;
+            } else if (charCode <= 0x7ff) {
+                byteLength += 2;
+            } else if (charCode <= 0xffff) {
+                byteLength += 3;
+            } else {
+                byteLength += 4;
+            }
+        }
+        return byteLength;
+    }
 
     // 글자 수 업데이트
     function updateCharCount() {
         const plainTextContent = quill.getText().trim();
-        charCountDisplay.textContent = `${plainTextContent.length} / 1000`;
+        const byteLength = getByteLength(plainTextContent);
+        charCountDisplay.textContent = `${byteLength} / 1000바이트`; // 1000 바이트 기준
     }
 
     quill.on('text-change', updateCharCount);
@@ -81,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     submitButton.addEventListener('click', async () => {
         const title = titleInput.value.trim();
         const content = quill.root.innerHTML;
-        const byteLength = new Blob([quill.getText().trim()]).size;
+        const byteLength = getByteLength(quill.getText().trim());
         const category = "DOG";
 
         if (!title || !content) {
