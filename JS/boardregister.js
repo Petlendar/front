@@ -137,6 +137,6 @@ function checkLoginStatus() {
     if (!token) {
         alert('로그인이 필요합니다.');
         const currentUrl = window.location.href;
-        window.location.href = `/user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
+        window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
     }
 }
