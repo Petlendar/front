@@ -157,7 +157,7 @@ async function processUserMessage() {
     }
 
     const typingIndicator = showTypingIndicator(); // 로딩 모션 추가
-
+    console.log("currentFucntions : ", apiEndpoints[currentFunction]);
     await sendApiRequest(apiEndpoints[currentFunction], currentPetId, userMessage, typingIndicator);
 }
 

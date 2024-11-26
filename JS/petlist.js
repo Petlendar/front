@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Redirect to pet registration page
   registerPetBtn.addEventListener('click', () => {
-    window.location.href = './PetRegistration.html';
+    window.location.href = '../pet/petRegistration.html';
   });
 
   // 로그인 여부 확인
