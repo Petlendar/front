@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         responseMessage.textContent = '반려동물이 삭제되었습니다.';
         responseMessage.style.display = 'block';
         setTimeout(() => {
-          window.location.href = 'petList.html';
+          window.location.href = './petlist.html';
         }, 1000);
       } else {
         responseMessage.textContent = '삭제 실패: ' + data.result.resultMessage;

@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async function () {
               document.getElementById('response-message').textContent = '반려동물이 삭제되었습니다.';
               document.getElementById('response-message').style.color = 'green';
               document.getElementById('response-message').style.display = 'block';
-              setTimeout(() => window.location.href = 'petList.html', 1500);
+              setTimeout(() => window.location.href = 'petlist.html', 1500);
             } else {
               document.getElementById('response-message').textContent = '삭제 실패: ' + deleteResult.result.resultMessage;
               document.getElementById('response-message').style.color = 'red';

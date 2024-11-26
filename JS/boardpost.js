@@ -17,6 +17,9 @@ async function checkLoginStatus() {
         // 로그인된 사용자 정보 로드
         await loadUserInfo();
     } else {
+        alert('로그인이 필요합니다.');
+        const currentUrl = window.location.href;
+        window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
         currentUserId = null; // 초기화
     }
 }

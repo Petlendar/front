@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!accessToken) {
         alert('로그인이 필요합니다.');
-        window.location.href = '../user/login.html';
+        const currentUrl = window.location.href;
+        window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
         return;
     }
 

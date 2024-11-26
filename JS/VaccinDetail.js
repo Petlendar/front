@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (!accessToken) {
       petListDiv.innerHTML = '<p>로그인이 필요합니다. 다시 로그인해주세요.</p>';
       setTimeout(() => {
-          window.location.href = '../user/login.html';
+        const currentUrl = window.location.href;
+        window.location.href = `./user/login.html?redirect=${encodeURIComponent(currentUrl)}`;
       }, 3000);
       return;
   }
